@@ -12,9 +12,6 @@
     ],
     "minimum-stability": "stable",
     "autoload": {
-      "files": [
-        "./src/helpers.php"
-      ],
       "psr-4": {
         "MTProto\\FluentKeyboard\\": "./src"
       }

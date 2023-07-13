@@ -5,60 +5,48 @@ use ArrayAccess;
 
 abstract class Keyboard implements ArrayAccess
 {
-    use Buttons;
+    use Options;
+    protected int $currentRowIndex = 0;
     protected array $data = [
         'rows' => [
             [ '_' => 'keyboardButtonRow', 'buttons' => [] ]
         ]
     ];
 
-    protected int $currentRowIndex = 0;
-
     public function init(): array
     {
         return $this->data;
     }
 
-    public function singleUse(): self
+    public function addKeyboard (Button ... $buttons): self
     {
-        $this->data['single_use'] = true;
-        return $this;  
-    }
-
-    public function resize(): self
-    {
-        $this->data['resize'] = true;
-        return $this;  
-    }
-
-    public function selective(): self
-    {   
-        $this->data['selective'] = true;
-        return $this;  
-    }
-    
-    public function inputPlaceHolder(string $text): self
-    {
-        $length = mb_strlen($text);
-        if ($length >= 1 && $length <= 64) {
-            $this->data['placeholder'] = $text;
-            return $this;
-        }
-        throw new Exception('PLACE_HOLDER_MAX_CHAR');
+        $row = &$this->data['rows'][$this->currentRowIndex];
+        $row['buttons'] = array_map(fn($val) => $val(), $buttons);
         return $this;
     }
-    public function row(): self
+
+    public function Row(?Button ... $button): self
     {
         $keyboard = &$this->data['rows'];
 
         // Last row is not empty, add new row
-        if (!empty($keyboard[$this->currentRowIndex])) {
+        if (!empty($keyboard[$this->currentRowIndex]['buttons'])) {
             $keyboard[] = [
                 '_' => 'keyboardButtonRow',
                 'buttons' => []
             ];
             $this->currentRowIndex++;
         }
+
+        if (!empty($button)) {
+            $this->addKeyboard(...$button);
+        }
+        return $this;
+    }
+
+    public function Stack(Button ... $button): self
+    {
+        array_map($this->Row(...), $button);
         return $this;
     }
 

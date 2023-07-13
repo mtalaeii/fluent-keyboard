@@ -1,0 +1,25 @@
+{
+    "name": "mt-proto/fluent-keyboard",
+    "description": "A fluent keyboard created for MTProto syntax",
+    "keywords": ["telegram", "bot", "mtproto", "fluent", "keyboard", "builder","mt-proto","madelineproto"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+      {
+        "name": "Mahdi",
+        "email": "mahdi.talaee1379@gmail.com"
+      }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+      "files": [
+        "./src/helpers.php"
+      ],
+      "psr-4": {
+        "MTProto\\FluentKeyboard\\": "./src"
+      }
+    },
+    "require": {
+      "php-64bit": ">=8.1"
+    }
+  }

@@ -6,7 +6,6 @@ use ArrayAccess;
 abstract class Keyboard implements ArrayAccess
 {
     use Buttons;
-    protected array $defaultRow =  [ '_' => 'keyboardButtonRow', 'buttons' => [] ];
     protected array $data = [
         'rows' => [
             [ '_' => 'keyboardButtonRow', 'buttons' => [] ]

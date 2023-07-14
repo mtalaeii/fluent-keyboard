@@ -8,7 +8,7 @@ class KeyboardHide extends Keyboard
 {
     public function __construct()
     {
-        $this->data['_'] = 'replyKeyboardHide';
+        $this->data = [ '_' => 'replyKeyboardHide' ];
     }
 
     final public function singleUse(): self

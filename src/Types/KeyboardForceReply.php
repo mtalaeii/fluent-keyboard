@@ -8,7 +8,7 @@ class KeyboardForceReply extends Keyboard
 {
     public function __construct()
     {
-        $this->data['_'] = 'replyKeyboardForceReply';
+        $this->data = [ '_' => 'replyKeyboardForceReply' ];
     }
 
     final public function resize(): self

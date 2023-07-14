@@ -39,27 +39,19 @@ abstract class Keyboard implements ArrayAccess
     {
         if (in_array(get_class($this), [KeyboardMarkup::class, KeyboardForceReply::class]) && ($arguments[0] || !isset($arguments[0]))) {
             $fn = match ($name) {
-                'singleUse' => function (bool $singleUse = true) {
-                    $this->data['singleUse'] = $singleUse;
-                    return $this;
-                },
-                'resize' => function (bool $resize = true) {
-                    $this->data['resize'] = $resize;
-                    return $this;
-                },
-                'selective' => function (bool $selective = true) {
-                    $this->data['selective'] = $selective;
-                    return $this;
-                },
+                'singleUse' => fn(bool $singleUse) => $this->data['singleUse'] = $singleUse,
+
+                'resize'    => fn(bool $resize = true) => $this->data['resize']    = $resize,
+
+                'selective' => fn(bool $selective = true) => $this->data['selective'] = $selective,
+
                 'placeholder' => function (string $placeholder = null) {
                     $length = mb_strlen($placeholder);
                     if (isset($placeholder) && $length >= 0 && $length <= 64) {
                         $this->data['placeholder'] = $placeholder;
-                        return $this;
-                    } elseif ($placeholder == null) {
-                        return $this;
+                    } elseif ($placeholder != null) {
+                        throw new Exception('PLACE_HOLDER_MAX_CHAR');
                     }
-                    throw new Exception('PLACE_HOLDER_MAX_CHAR');
                 },
                 default => throw new Exception(
                     sprintf('Call to undefined method %s::%s()', get_class($this), $name)

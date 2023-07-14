@@ -1,6 +1,6 @@
 <?php
 
-namespace MTProto\FluentKeyboard;
+namespace EasyKeyboard\FluentKeyboard;
 
 final class Exception extends \Exception
 {

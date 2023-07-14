@@ -1,15 +1,24 @@
 <?php
 
-namespace MTProto\FluentKeyboard;
+namespace EasyKeyboard\FluentKeyboard;
+
+use EasyKeyboard\FluentKeyboard\Types\{KeyboardMarkup, KeyboardForceReply};
 use ArrayAccess;
 
+/**
+ * Abstract keyboard class
+ *
+ * @method self singleUse(bool $singleUse = true)
+ * @method self resize(bool $resize = true)
+ * @method self selective(bool $selective = true)
+ * @method self placeholder(bool $placeholder = null)
+ */
 abstract class Keyboard implements ArrayAccess
 {
-    use Options;
     protected int $currentRowIndex = 0;
     protected array $data = [
         'rows' => [
-            [ '_' => 'keyboardButtonRow', 'buttons' => [] ]
+            ['_' => 'keyboardButtonRow', 'buttons' => []]
         ]
     ];
 
@@ -22,15 +31,56 @@ abstract class Keyboard implements ArrayAccess
     {
         return new static;
     }
- 
-    public function addKeyboard(Button ... $buttons): self
+
+    /**
+     * @throws Exception
+     */
+    public function __call(string $name, array $arguments)
+    {
+        if (in_array(get_class($this), [KeyboardMarkup::class, KeyboardForceReply::class]) && ($arguments[0] || !isset($arguments[0]))) {
+            $fn = match ($name) {
+                'singleUse' => function (bool $singleUse = true) {
+                    $this->data['singleUse'] = $singleUse;
+                    return $this;
+                },
+                'resize' => function (bool $resize = true) {
+                    $this->data['resize'] = $resize;
+                    return $this;
+                },
+                'selective' => function (bool $selective = true) {
+                    $this->data['selective'] = $selective;
+                    return $this;
+                },
+                'placeholder' => function (string $placeholder = null) {
+                    $length = mb_strlen($placeholder);
+                    if (isset($placeholder) && $length >= 0 && $length <= 64) {
+                        $this->data['placeholder'] = $placeholder;
+                        return $this;
+                    } elseif ($placeholder == null) {
+                        return $this;
+                    }
+                    throw new Exception('PLACE_HOLDER_MAX_CHAR');
+                },
+                default => throw new Exception(
+                    sprintf('Call to undefined method %s::%s()', get_class($this), $name)
+                )
+            };
+            isset($arguments[0]) ? $fn($arguments[0]) : $fn();
+            return $this;
+        }
+        throw new Exception(
+            sprintf('Call to undefined method %s::%s()', get_class($this), $name)
+        );
+    }
+
+    public function addKeyboard(Button ...$buttons): self
     {
         $row = &$this->data['rows'][$this->currentRowIndex];
         $row['buttons'] = array_map(fn($val) => $val(), $buttons);
         return $this;
     }
 
-    public function Row(?Button ... $button): self
+    public function Row(?Button ...$button): self
     {
         $keyboard = &$this->data['rows'];
 
@@ -49,7 +99,7 @@ abstract class Keyboard implements ArrayAccess
         return $this;
     }
 
-    public function Stack(Button ... $button): self
+    public function Stack(Button ...$button): self
     {
         array_map($this->Row(...), $button);
         return $this;
@@ -69,7 +119,7 @@ abstract class Keyboard implements ArrayAccess
         return isset($this->data[$offset]);
     }
 
-    public function offsetUnset($offset) :void
+    public function offsetUnset($offset): void
     {
         unset($this->data[$offset]);
     }

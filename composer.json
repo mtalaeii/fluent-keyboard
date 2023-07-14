@@ -13,10 +13,11 @@
     "minimum-stability": "stable",
     "autoload": {
       "psr-4": {
-        "MTProto\\FluentKeyboard\\": "./src"
+        "EasyKeyboard\\FluentKeyboard\\": "./src"
       }
     },
     "require": {
-      "php-64bit": ">=8.1"
+      "php-64bit": ">=8.1",
+      "ext-mbstring": "*"
     }
   }

@@ -1,7 +1,8 @@
 <?php
 
-namespace MTProto\FluentKeyboard\Types;
-use MTProto\FluentKeyboard\Keyboard;
+namespace EasyKeyboard\FluentKeyboard\Types;
+
+use EasyKeyboard\FluentKeyboard\Keyboard;
 
 class KeyboardMarkup extends Keyboard
 {
@@ -10,9 +11,4 @@ class KeyboardMarkup extends Keyboard
         $this->data['_'] = 'replyKeyboardMarkup';
     }
 
-    public function persistent(): self
-    {
-        $this->data['persistent'] = true;
-        return $this;
-    }
 }

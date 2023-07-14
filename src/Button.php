@@ -1,45 +1,45 @@
 <?php
 
-namespace MTProto\FluentKeyboard;
+namespace EasyKeyboard\FluentKeyboard;
 
-class Button
+final class Button
 {
-    private array $keyborad = [];
+    private array $keyboard = [];
 
     public function __invoke()
     {
-        return $this->keyborad;
+        return $this->keyboard;
     }
 
     public function __construct(array $data = [])
     {
-        $this->keyborad = $data + $this->keyborad;
+        $this->keyboard = $data + $this->keyboard;
     }
 
-    private static function createButton(string $type, array $data)
+    private static function createButton(string $type, array $data): array
     {
         return ['_' => $type] + $data;
     }
 
-    public function requestContact()
+    public function requestContact(): static
     {
-        if (array_key_exists('text', $this->keyborad))
-            $this->keyborad['_'] = 'keyboardButtonRequestPhone';
+        if (array_key_exists('text', $this->keyboard))
+            $this->keyboard['_'] = 'keyboardButtonRequestPhone';
         return $this;
     }
 
-    public function requestLocation()
+    public function requestLocation(): static
     {
-        if (array_key_exists('text', $this->keyborad))
-            $this->keyborad['_'] = 'keyboardButtonRequestGeoLocation';
+        if (array_key_exists('text', $this->keyboard))
+            $this->keyboard['_'] = 'keyboardButtonRequestGeoLocation';
         return $this;
     }
 
-    public function callbackData(string $data)
+    public function callbackData(string $data): static
     {
-        if (array_key_exists('text', $this->keyborad)) {
-            $this->keyborad['_']   = 'keyboardButtonCallback';
-            $this->keyborad['data'] = $data;
+        if (array_key_exists('text', $this->keyboard)) {
+            $this->keyboard['_'] = 'keyboardButtonCallback';
+            $this->keyboard['data'] = $data;
         }
         return $this;
     }
@@ -112,9 +112,9 @@ class Button
         $data = self::createButton(
             'keyboardButtonUrlAuth',
             [
-                'text'      => $text,
-                'fwd_text'  => $fwd_text,
-                'url'       => $url,
+                'text' => $text,
+                'fwd_text' => $fwd_text,
+                'url' => $url,
                 'button_id' => $id
             ]
         );
@@ -141,7 +141,7 @@ class Button
 
     public static function WebApp(string $text, string $url): static
     {
-        $type = basename(get_class(new static())) == 'KeyboardInline'
+        $type = basename(get_class(new static)) == 'KeyboardInline'
             ? 'keyboardButtonWebView'
             : 'keyboardButtonSimpleWebView';
         $data = self::createButton(

@@ -37,7 +37,7 @@ abstract class Keyboard implements ArrayAccess
      */
     public function __call(string $name, array $arguments)
     {
-        if (in_array(get_class($this), [KeyboardMarkup::class, KeyboardForceReply::class]) && ($arguments[0] || !isset($arguments[0]))) {
+        if (in_array($this::class, [KeyboardMarkup::class, KeyboardForceReply::class]) && ($arguments[0] || !isset($arguments[0]))) {
             $fn = match ($name) {
                 'singleUse' => fn(bool $singleUse) => $this->data['singleUse'] = $singleUse,
 

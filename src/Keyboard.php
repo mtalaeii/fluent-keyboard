@@ -39,12 +39,9 @@ abstract class Keyboard implements ArrayAccess
     {
         if (in_array($this::class, [KeyboardMarkup::class, KeyboardForceReply::class]) && ($arguments[0] || !isset($arguments[0]))) {
             $fn = match ($name) {
-                'singleUse' => fn(bool $singleUse) => $this->data['singleUse'] = $singleUse,
-
-                'resize'    => fn(bool $resize = true) => $this->data['resize']    = $resize,
-
-                'selective' => fn(bool $selective = true) => $this->data['selective'] = $selective,
-
+                'singleUse'   => fn(bool $singleUse) => $this->data['singleUse']        = $singleUse,
+                'resize'      => fn(bool $resize = true) => $this->data['resize']       = $resize,
+                'selective'   => fn(bool $selective = true) => $this->data['selective'] = $selective,
                 'placeholder' => function (string $placeholder = null) {
                     $length = mb_strlen($placeholder);
                     if (isset($placeholder) && $length >= 0 && $length <= 64) {

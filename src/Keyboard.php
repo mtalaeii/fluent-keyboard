@@ -54,14 +54,14 @@ abstract class Keyboard implements ArrayAccess
                     }
                 },
                 default => throw new Exception(
-                    sprintf('Call to undefined method %s::%s()', get_class($this), $name)
+                    sprintf('Call to undefined method %s()', __METHOD__)
                 )
             };
             isset($arguments[0]) ? $fn($arguments[0]) : $fn();
             return $this;
         }
         throw new Exception(
-            sprintf('Call to undefined method %s::%s()', get_class($this), $name)
+            sprintf('Call to undefined method %s()', __METHOD__)
         );
     }
 

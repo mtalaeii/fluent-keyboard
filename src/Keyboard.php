@@ -18,7 +18,7 @@ abstract class Keyboard implements ArrayAccess
         return $this->data;
     }
 
-    public function addKeyboard (Button ... $buttons): self
+    public function addKeyboard(Button ... $buttons): self
     {
         $row = &$this->data['rows'][$this->currentRowIndex];
         $row['buttons'] = array_map(fn($val) => $val(), $buttons);

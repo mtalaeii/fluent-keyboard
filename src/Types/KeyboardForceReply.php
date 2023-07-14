@@ -15,4 +15,16 @@ class KeyboardForceReply extends Keyboard
     {
         throw new Exception('INVALID_KEYOBARD_OPTION'); 
     }
+    
+    public function __call($name, $arguments)
+    {
+        match ($name) {
+            'addKeyboard',
+            'Row',
+            'Stack' => throw new Exception('INVALID_KEYOBARD_METHOD'),
+            default => throw new Exception(
+                sprintf('Call to undefined method %s::%s()',  get_class($this), $name)
+            )
+        };
+    }
 }

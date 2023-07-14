@@ -18,6 +18,11 @@ abstract class Keyboard implements ArrayAccess
         return $this->data;
     }
 
+    public static function make(): static
+    {
+        return new static;
+    }
+ 
     public function addKeyboard(Button ... $buttons): self
     {
         $row = &$this->data['rows'][$this->currentRowIndex];

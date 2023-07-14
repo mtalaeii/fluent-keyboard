@@ -3,8 +3,9 @@
 namespace MTProto\FluentKeyboard\Types;
 use MTProto\FluentKeyboard\Keyboard;
 use MTProto\FluentKeyboard\Exception;
+use MTProto\FluentKeyboard\Button;
 
-class KeyboardHide extends Keyboard
+final class KeyboardHide extends Keyboard
 {
     public function __construct()
     {
@@ -26,15 +27,19 @@ class KeyboardHide extends Keyboard
         throw new Exception('INVALID_KEYOBARD_OPTION'); 
     }
 
-    public function __call($name, $arguments)
+    final public function addKeyboard(Button ... $buttons): self
     {
-        match ($name) {
-            'addKeyboard',
-            'Row',
-            'Stack' => throw new Exception('INVALID_KEYOBARD_METHOD'),
-            default => throw new Exception(
-                sprintf('Call to undefined method %s::%s()',  get_class($this), $name)
-            )
-        };
+        throw new Exception('INVALID_KEYOBARD_METHOD');
+    }
+
+    final public function Row(?Button ... $button): self
+    {
+        throw new Exception('INVALID_KEYOBARD_METHOD');
+    }
+
+    final public function Stack(Button ... $button): self
+    {
+        throw new Exception('INVALID_KEYOBARD_METHOD');
+
     }
 }

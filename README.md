@@ -85,10 +85,10 @@ The Buttons are created in the different way:
 KeyboardButton::Phone('Send my Contact');
 ```
 
-This is done the same way for `KeyboardInline`:
+This is done the same way for `InlineButton`:
 
 ```php
-KeyboardInline:Url('hello','https://example.com');
+InlineButton::Url('hello','https://example.com');
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>

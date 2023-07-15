@@ -11,7 +11,7 @@ interface KeyboardButtonDocs
      * @param int $user_id
      * @return KeyboardButton
      */
-    public static function Profile(string $text, int $user_id):KeyboardButton;
+    public static function Profile(string $text, int $user_id): KeyboardButton;
 
     /**
      * Create text button that request poll from user
@@ -20,7 +20,7 @@ interface KeyboardButtonDocs
      * @param bool $quiz
      * @return KeyboardButton
      */
-    public static function Poll(string $text, bool $quiz = false):KeyboardButton;
+    public static function Poll(string $text, bool $quiz = false): KeyboardButton;
 
     /**
      * Create text button that request location from user
@@ -28,7 +28,7 @@ interface KeyboardButtonDocs
      * @param string $text
      * @return KeyboardButton
      */
-    public static function Location(string $text):KeyboardButton;
+    public static function Location(string $text): KeyboardButton;
 
     /**
      * Create text button that request contact info from user
@@ -36,6 +36,6 @@ interface KeyboardButtonDocs
      * @param string $text
      * @return KeyboardButton
      */
-    public static function Phone(string $text):KeyboardButton;
+    public static function Phone(string $text): KeyboardButton;
 
 }

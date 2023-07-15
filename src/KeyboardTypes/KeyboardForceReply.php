@@ -1,6 +1,7 @@
 <?php
 
 namespace EasyKeyboard\FluentKeyboard\Types;
+
 use EasyKeyboard\FluentKeyboard\Docs\KeyboardDocs;
 use EasyKeyboard\FluentKeyboard\Keyboard;
 
@@ -11,6 +12,6 @@ final class KeyboardForceReply extends Keyboard
 {
     public function __construct()
     {
-        $this->data = [ '_' => 'replyKeyboardForceReply' ];
+        $this->data = ['_' => 'replyKeyboardForceReply'];
     }
 }

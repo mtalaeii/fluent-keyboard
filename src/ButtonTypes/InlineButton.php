@@ -15,8 +15,8 @@ final class InlineButton extends Button
      */
     public static function __callStatic(string $name, array $arguments)
     {
-        if(count($arguments) >= 2){
-            switch ($name){
+        if (count($arguments) >= 2) {
+            switch ($name) {
                 case 'SwitchInline':
                     $data = self::createButton(
                         'keyboardButtonSwitchInline',

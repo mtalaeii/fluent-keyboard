@@ -16,8 +16,8 @@ class KeyboardButton extends Button
      */
     public static function __callStatic(string $name, array $arguments)
     {
-        if(count($arguments) >= 1){
-            switch ($name){
+        if (count($arguments) >= 1) {
+            switch ($name) {
                 case 'Profile':
                     $data = self::createButton(
                         'keyboardButtonUserProfile',

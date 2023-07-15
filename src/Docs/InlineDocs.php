@@ -13,7 +13,7 @@ interface InlineDocs
      * @param string $url
      * @return InlineButton
      */
-    public static function WebApp(string $text, string $url):InlineButton;
+    public static function WebApp(string $text, string $url): InlineButton;
 
     /**
      * Create Inline button with SwitchInline options
@@ -24,7 +24,7 @@ interface InlineDocs
      * @param array $peer_types
      * @return InlineButton
      */
-    public static function SwitchInline(string $text, string $query, bool $same_peer = true, array $peer_types = []):InlineButton;
+    public static function SwitchInline(string $text, string $query, bool $same_peer = true, array $peer_types = []): InlineButton;
 
     /**
      * Create inline button for login
@@ -35,7 +35,7 @@ interface InlineDocs
      * @param string $fwd_text
      * @return InlineButton
      */
-    public static function Login(string $text, string $url, int $id, string $fwd_text):InlineButton;
+    public static function Login(string $text, string $url, int $id, string $fwd_text): InlineButton;
 
     /**
      * Create inline button with callback data
@@ -45,7 +45,7 @@ interface InlineDocs
      * @param $need_password
      * @return InlineButton
      */
-    public static function CallBack(string $text, string $callback,bool $need_password = false):InlineButton;
+    public static function CallBack(string $text, string $callback, bool $need_password = false): InlineButton;
 
     /**
      * Create Inline button with url
@@ -54,6 +54,6 @@ interface InlineDocs
      * @param string $url
      * @return InlineButton
      */
-    public static function Url(string $text, string $url):InlineButton;
+    public static function Url(string $text, string $url): InlineButton;
 
 }

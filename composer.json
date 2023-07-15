@@ -1,5 +1,5 @@
 {
-    "name": "mt-proto/fluent-keyboard",
+    "name": "easy-keyboard/fluent-keyboard",
     "description": "A fluent keyboard created for MTProto syntax",
     "keywords": ["telegram", "bot", "mtproto", "fluent", "keyboard", "builder","mt-proto","madelineproto"],
     "type": "library",
@@ -10,7 +10,7 @@
         "email": "mahdi.talaee1379@gmail.com"
       }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "beta",
     "autoload": {
       "psr-4": {
         "EasyKeyboard\\FluentKeyboard\\": "./src"

@@ -3,12 +3,8 @@
 namespace EasyKeyboard\FluentKeyboard\ButtonTypes;
 
 use EasyKeyboard\FluentKeyboard\Button;
-use EasyKeyboard\FluentKeyboard\Docs\KeyboardButtonDocs;
 use EasyKeyboard\FluentKeyboard\Exception;
 
-/**
- * @mixin KeyboardButtonDocs
- */
 class KeyboardButton extends Button
 {
     /**
@@ -57,5 +53,80 @@ class KeyboardButton extends Button
         throw new Exception(
             sprintf('Call to undefined method %s()', $name)
         );
+    }
+
+    /**
+     * @param string $text
+     * @param int $user_id
+     * @return KeyboardButton
+     */
+    public static function Profile(string $text, int $user_id): KeyboardButton
+    {
+        $data = self::createButton(
+            'keyboardButtonUserProfile',
+            ['text' => $text, 'user_id' => $user_id]
+        );
+        return new static($data);
+    }
+
+    /**
+     * Create text button that request poll from user
+     *
+     * @param string $text
+     * @param bool $quiz
+     * @return KeyboardButton
+     */
+    public static function Poll(string $text, bool $quiz = false): KeyboardButton
+    {
+        $data = self::createButton(
+            'keyboardButtonRequestPoll',
+            ['quiz' => $text ?? false, 'text' => $quiz]
+        );
+        return new static($data);
+    }
+
+    /**
+     * Create text button that request location from user
+     *
+     * @param string $text
+     * @return KeyboardButton
+     */
+    public static function Location(string $text): KeyboardButton
+    {
+        $data = self::createButton(
+            'keyboardButtonRequestGeoLocation',
+            ['text' => $text]
+        );
+        return new static($data);
+    }
+
+    /**
+     * Create text button that request contact info from user
+     *
+     * @param string $text
+     * @return KeyboardButton
+     */
+    public static function Phone(string $text): KeyboardButton
+    {
+        $data = self::createButton(
+            'keyboardButtonRequestPhone',
+            ['text' => $text]
+        );
+        return new static($data);
+    }
+
+    /**
+     * create simple text keyboard
+     *
+     * @param string $text
+     * @return KeyboardButton
+     */
+    public static function Text(string $text): KeyboardButton
+    {
+        $data = self::createButton(
+            'keyboardButton',
+            ['text' => $text]
+        );
+        return new static($data);
     }
 }

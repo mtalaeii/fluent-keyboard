@@ -47,7 +47,7 @@ This is best explained with an example:
 $this->messages->sendMessage(
     chat_id:       12345,
     text:          'Keyboard Example',
-    reply_markup:  ReplyKeyboardMarkup::make()
+    reply_markup:  KeyboardMarkup::make()
         ->singleUse()
         ->addButton(KeyboardButton::Text('Cancel'))
         ->addButton(KeyboardButton::Text('OK'))
@@ -55,7 +55,7 @@ $this->messages->sendMessage(
 );
 ```
 
-A ReplyKeyboardMarkup is created by calling the static `make()` method on `ReplyKeyboardMarkup`. After that every field,
+A ReplyKeyboardMarkup is created by calling the static `make()` method on `KeyboardMarkup`. After that every field,
 like `singleUse`, ... add some extras. Buttons can be added by calling
 the `addButton()` method. We have a detailed look on that later.(note that this keyboard need to convert to array to 
 readable by your robot so at the end you need to call `init()` method)
@@ -71,7 +71,8 @@ After that you can chain methods to set additional fields that are available in 
 
 ```php
 KeyboardMarkup::make()
-    ->placeholder('Placeholder');
+    ->placeholder('Placeholder')
+    ->init();
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -100,7 +101,7 @@ do this.
 #### By Row
 
 ```php
-ReplyKeyboardMarkup::make()
+KeyboardMarkup::make()
     ->row([
         KeyboardButton::Text('Cancel'),
         KeyboardButton::Text('OK')
@@ -111,7 +112,7 @@ ReplyKeyboardMarkup::make()
 If you need more than one row, call `row()` multiple times:
 
 ```php
-InlineKeyboardMarkup::make()
+KeyboardInline::make()
     ->row([
         InlineButton::Callback('1','page-1'),
         InlineButton::Callback('2','page-2'),
@@ -127,7 +128,7 @@ InlineKeyboardMarkup::make()
 #### By Button
 
 ```php
-ReplyKeyboardMarkup::make()
+KeyboardMarkup::make()
     ->addButton(KeyboardButton::Text('First Button'))
     ->addButton(KeyboardButton::Text('Second Button'))
     ->inint();
@@ -136,7 +137,7 @@ ReplyKeyboardMarkup::make()
 If you need more than one row, just call the row method without arguments, and continue calling `addButton()`:
 
 ```php
-InlineKeyboardMarkup::make()
+KeyboardInline::make()
     ->addButton(InlineButton::Callback('A','answer-a'))
     ->addButton(InlineButton::Callback('B','answer-b'))
     ->row()
@@ -153,7 +154,7 @@ pass the variable to the `row()` method.
 If you want to add a bunch of buttons that have each a row for themselves you can use the `Stack()` method.
 
 ```php
-InlineKeyboardMarkup::make()
+KeyboardInline::make()
     ->Stack([
         InlineButton::Login('Login','https://example.com/login'),
         InlineButton::Url('Visit Homepage','https://example.com')
@@ -178,7 +179,8 @@ $this->reply('Thank you',
 
 ```php
 $data['reply_markup'] = KeyboardForceReply::make()
-    ->addButton(Text('Hello please reply')->placeholder('must reply'))
+    ->addButton(KeyboardButton::Text('Hello please reply'))
+    ->placeholder('must reply')
     ->init();
 ```
 

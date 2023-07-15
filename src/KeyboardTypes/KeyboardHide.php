@@ -1,6 +1,6 @@
 <?php
 
-namespace EasyKeyboard\FluentKeyboard\Types;
+namespace EasyKeyboard\FluentKeyboard\KeyboardTypes;
 
 use EasyKeyboard\FluentKeyboard\Keyboard;
 

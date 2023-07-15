@@ -2,7 +2,7 @@
 
 namespace EasyKeyboard\FluentKeyboard\Docs;
 
-use EasyKeyboard\FluentKeyboard\Types\{KeyboardForceReply, KeyboardMarkup};
+use EasyKeyboard\FluentKeyboard\KeyboardTypes\{KeyboardForceReply, KeyboardMarkup};
 
 interface KeyboardDocs
 {

@@ -1,8 +1,7 @@
 <?php
 
-namespace EasyKeyboard\FluentKeyboard\Types;
+namespace EasyKeyboard\FluentKeyboard\KeyboardTypes;
 
-use EasyKeyboard\FluentKeyboard\Docs\InlineDocs;
 use EasyKeyboard\FluentKeyboard\Docs\KeyboardDocs;
 use EasyKeyboard\FluentKeyboard\Keyboard;
 

@@ -2,7 +2,6 @@
 
 namespace EasyKeyboard\FluentKeyboard;
 
-use EasyKeyboard\FluentKeyboard\Types\{KeyboardMarkup, KeyboardForceReply};
 use ArrayAccess;
 
 abstract class Keyboard implements ArrayAccess
@@ -29,9 +28,9 @@ abstract class Keyboard implements ArrayAccess
      */
     public function __call(string $name, array $arguments)
     {
-        if (($arguments[0] || !isset($arguments[0]))) {
+        if ((!isset($arguments[0]) || $arguments[0])) {
             $fn = match ($name) {
-                'singleUse' => fn(bool $singleUse) => $this->data['singleUse'] = $singleUse,
+                'singleUse' => fn(bool $singleUse = true) => $this->data['singleUse'] = $singleUse,
                 'resize' => fn(bool $resize = true) => $this->data['resize'] = $resize,
                 'selective' => fn(bool $selective = true) => $this->data['selective'] = $selective,
                 'placeholder' => function (string $placeholder = null) {

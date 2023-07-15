@@ -5,14 +5,6 @@ namespace EasyKeyboard\FluentKeyboard;
 use EasyKeyboard\FluentKeyboard\Types\{KeyboardMarkup, KeyboardForceReply};
 use ArrayAccess;
 
-/**
- * Abstract keyboard class
- *
- * @method self singleUse(bool $singleUse = true)
- * @method self resize(bool $resize = true)
- * @method self selective(bool $selective = true)
- * @method self placeholder(bool $placeholder = null)
- */
 abstract class Keyboard implements ArrayAccess
 {
     protected int $currentRowIndex = 0;
@@ -37,7 +29,7 @@ abstract class Keyboard implements ArrayAccess
      */
     public function __call(string $name, array $arguments)
     {
-        if (in_array($this::class, [KeyboardMarkup::class, KeyboardForceReply::class]) && ($arguments[0] || !isset($arguments[0]))) {
+        if (($arguments[0] || !isset($arguments[0]))) {
             $fn = match ($name) {
                 'singleUse'   => fn(bool $singleUse) => $this->data['singleUse']        = $singleUse,
                 'resize'      => fn(bool $resize = true) => $this->data['resize']       = $resize,
@@ -51,14 +43,14 @@ abstract class Keyboard implements ArrayAccess
                     }
                 },
                 default => throw new Exception(
-                    sprintf('Call to undefined method %s()', __METHOD__)
+                    sprintf('Call to undefined method %s()', $name)
                 )
             };
             isset($arguments[0]) ? $fn($arguments[0]) : $fn();
             return $this;
         }
         throw new Exception(
-            sprintf('Call to undefined method %s()', __METHOD__)
+            sprintf('Call to undefined method %s()', $name)
         );
     }
 

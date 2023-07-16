@@ -13,6 +13,7 @@ abstract class Keyboard
 
     public function init(): array
     {
+        $keyboard = &$this->data['rows'];
         if (empty($keyboard[$this->currentRowIndex]['buttons']))
             unset($keyboard[$this->currentRowIndex]);
 

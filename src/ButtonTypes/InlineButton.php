@@ -6,7 +6,6 @@ use EasyKeyboard\FluentKeyboard\Button;
 
 final class InlineButton extends Button
 {
-
     /**
      * Create Inline button with SwitchInline options
      *
@@ -18,10 +17,13 @@ final class InlineButton extends Button
      */
     public static function SwitchInline(string $text, string $query, bool $same_peer = true, array $peer_types = []): InlineButton
     {
-        $data = self::createButton(
-            'keyboardButtonSwitchInline',
-            ['text' => $text, 'query' => $query, 'same_peer' => $same_peer, 'peer_types' => $peer_types]
-        );
+        $data = [
+            '_'          => 'keyboardButtonSwitchInline',
+            'text'       => $text,
+            'query'      => $query,
+            'same_peer'  => $same_peer,
+            'peer_types' => $peer_types
+        ];
         return new static($data);
     }
 
@@ -34,10 +36,11 @@ final class InlineButton extends Button
      */
     public static function WebApp(string $text, string $url): InlineButton
     {
-        $data = self::createButton(
-            'keyboardButtonWebView',
-            ['text' => $text, 'url' => $url]
-        );
+        $data = [
+            '_'    => 'keyboardButtonWebView',
+            'text' => $text,
+            'url'  => $url
+        ];
         return new static($data);
     }
 
@@ -52,15 +55,13 @@ final class InlineButton extends Button
      */
     public static function Login(string $text, string $url, int $id = 0, string $fwd_text = null): InlineButton
     {
-        $data = self::createButton(
-            'keyboardButtonUrlAuth',
-            [
-                'text' => $text,
-                'fwd_text' => $url,
-                'url' => $id,
-                'button_id' => $fwd_text
-            ]
-        );
+        $data = [
+            '_'         => 'keyboardButtonUrlAuth',
+            'text'      => $text,
+            'fwd_text'  => $url,
+            'url'       => $id,
+            'button_id' => $fwd_text
+        ];
         return new static($data);
     }
 
@@ -74,10 +75,12 @@ final class InlineButton extends Button
      */
     public static function CallBack(string $text, string $callback, bool $requires_password = false): InlineButton
     {
-        $data = self::createButton(
-            'keyboardButtonCallback',
-            ['requires_password' => $requires_password, 'text' => $text, 'data' => $callback]
-        );
+        $data = [
+            '_'                 => 'keyboardButtonCallback',
+            'text'              => $text,
+            'data'              => $callback,
+            'requires_password' => $requires_password
+        ];
         return new static($data);
     }
 
@@ -90,10 +93,11 @@ final class InlineButton extends Button
      */
     public static function Url(string $text, string $url): InlineButton
     {
-        $data = self::createButton(
-            'keyboardButtonUrl',
-            ['text' => $text, 'url' => $url]
-        );
+        $data = [
+            '_'    => 'keyboardButtonUrl',
+            'text' => $text,
+            'url'  => $url
+        ];
         return new static($data);
     }
 }

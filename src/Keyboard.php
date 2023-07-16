@@ -14,7 +14,7 @@ abstract class Keyboard
     public function init(): array
     {
         if (empty($keyboard[$this->currentRowIndex]['buttons']))
-            unset($keyboard[$this->currentRowIndex]['buttons']);
+            unset($keyboard[$this->currentRowIndex]);
 
         return $this->data;
     }

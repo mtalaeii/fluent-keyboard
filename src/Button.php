@@ -15,24 +15,4 @@ abstract class Button
     {
         $this->keyboard = $data + $this->keyboard;
     }
-
-//    public static function Game(string $text): static
-//    {
-//        $data = self::createButton(
-//            'keyboardButtonGame',
-//            ['text' => $text]
-//        );
-//        return new static($data);
-//    }
-
-//    public static function Buy(string $text): static
-//    {
-//        $data = self::createButton(
-//            'keyboardButtonBuy',
-//            ['text' => $text]
-//        );
-//        return new static($data);
-//    }
-
-
 }

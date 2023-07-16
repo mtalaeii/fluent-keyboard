@@ -2,8 +2,6 @@
 
 namespace EasyKeyboard\FluentKeyboard;
 
-use ArrayAccess;
-
 abstract class Keyboard
 {
     protected int $currentRowIndex = 0;
@@ -15,6 +13,9 @@ abstract class Keyboard
 
     public function init(): array
     {
+        if (empty($keyboard[$this->currentRowIndex]['buttons']))
+            unset($keyboard[$this->currentRowIndex]['buttons']);
+
         return $this->data;
     }
 
@@ -57,7 +58,7 @@ abstract class Keyboard
     {
         $row = &$this->data['rows'][$this->currentRowIndex];
         $buttons = array_map(fn($val) => $val(), $buttons);
-        $row['buttons'][] = array_shift($buttons);
+        $row['buttons'] = array_merge($row['buttons'] ?? [], $buttons);
         return $this;
     }
 
@@ -69,27 +70,20 @@ abstract class Keyboard
         if (!empty($keyboard[$this->currentRowIndex]['buttons'])) {
             $keyboard[] = [
                 '_' => 'keyboardButtonRow',
-                'buttons' => []
+                'buttons' => $button ?? []
             ];
             $this->currentRowIndex++;
         }
 
-        if (!empty($button)) {
-            $this->addButton(...$button);
-            $this->currentRowIndex++;
-        }
+        if (!empty($button))
+            $this->row();
+
         return $this;
     }
 
     public function Stack(Button ...$button): self
     {
-        $counter = 0;
-        $count = count($button);
-        array_map(function ($button)use(&$counter,$count){
-            $this->addButton($button);
-            if($count-1 != $counter)$this->row();
-            $counter++;
-        }, $button);
+        array_map($this->row(...), $button);
         return $this;
     }
 }

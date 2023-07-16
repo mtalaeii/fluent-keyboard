@@ -100,4 +100,22 @@ final class InlineButton extends Button
         ];
         return new static($data);
     }
+
+    public static function Game(string $text): static
+    {
+        $data = [
+            '_'    => 'keyboardButtonGame',
+            'text' => $text
+        ];
+        return new static($data);
+    }
+
+    public static function Buy(string $text): static
+    {
+        $data = [
+            '_'    => 'keyboardButtonBuy',
+            'text' => $text
+        ];
+        return new static($data);
+    }
 }

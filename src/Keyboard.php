@@ -70,14 +70,16 @@ abstract class Keyboard
         // Last row is not empty, add new row
         if (!empty($keyboard[$this->currentRowIndex]['buttons'])) {
             $keyboard[] = [
-                '_' => 'keyboardButtonRow',
-                'buttons' => $button ?? []
+                '_'       => 'keyboardButtonRow',
+                'buttons' => []
             ];
             $this->currentRowIndex++;
         }
 
-        if (!empty($button))
+        if (!empty($button)) {
+            $this->addButton(... $button);
             $this->row();
+        }
 
         return $this;
     }

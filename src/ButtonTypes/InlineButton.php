@@ -50,7 +50,7 @@ final class InlineButton extends Button
      * @param string $fwd_text
      * @return InlineButton
      */
-    public static function Login(string $text, string $url, int $id, string $fwd_text): InlineButton
+    public static function Login(string $text, string $url, int $id = 0, string $fwd_text = null): InlineButton
     {
         $data = self::createButton(
             'keyboardButtonUrlAuth',

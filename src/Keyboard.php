@@ -56,7 +56,8 @@ abstract class Keyboard implements ArrayAccess
     public function addButton(Button ...$buttons): self
     {
         $row = &$this->data['rows'][$this->currentRowIndex];
-        $row['buttons'] = array_map(fn($val) => $val(), $buttons);
+        $buttons = array_map(fn($val) => $val(), $buttons);
+        $row['buttons'][] = array_shift($buttons);
         return $this;
     }
 
@@ -75,13 +76,20 @@ abstract class Keyboard implements ArrayAccess
 
         if (!empty($button)) {
             $this->addButton(...$button);
+            $this->currentRowIndex++;
         }
         return $this;
     }
 
     public function Stack(Button ...$button): self
     {
-        array_map($this->row(...), $button);
+        $counter = 0;
+        $count = count($button);
+        array_map(function ($button)use(&$counter,$count){
+            $this->addButton($button);
+            if($count-1 != $counter)$this->row();
+            $counter++;
+        }, $button);
         return $this;
     }
 

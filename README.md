@@ -102,10 +102,10 @@ do this.
 
 ```php
 KeyboardMarkup::make()
-    ->row([
+    ->row(
         KeyboardButton::Text('Cancel'),
         KeyboardButton::Text('OK')
-    ])
+    )
     ->init();
 ```
 
@@ -113,16 +113,16 @@ If you need more than one row, call `row()` multiple times:
 
 ```php
 KeyboardInline::make()
-    ->row([
+    ->row(
         InlineButton::Callback('1','page-1'),
         InlineButton::Callback('2','page-2'),
         InlineButton::Callback('3','page-3')
-    ])
-    ->row([
+    )
+    ->row(
         InlineButton::Callback('prev','page-prev'),
         InlineButton::Callback('next','page-next')
-    ])
-    ->inint();
+    )
+    ->init();
 ```
 
 #### By Button
@@ -131,7 +131,7 @@ KeyboardInline::make()
 KeyboardMarkup::make()
     ->addButton(KeyboardButton::Text('First Button'))
     ->addButton(KeyboardButton::Text('Second Button'))
-    ->inint();
+    ->init();
 ```
 
 If you need more than one row, just call the row method without arguments, and continue calling `addButton()`:
@@ -143,7 +143,7 @@ KeyboardInline::make()
     ->row()
     ->addButton(InlineButton::Callback('C','answer-c'))
     ->addButton(InlineButton::Callback('D','answer-d'))
-    ->inint();
+    ->init();
 ```
 
 It's up to you if you define your buttons inline like in these examples or if you'd like to generate a whole row beforehand and
@@ -155,11 +155,11 @@ If you want to add a bunch of buttons that have each a row for themselves you ca
 
 ```php
 KeyboardInline::make()
-    ->Stack([
+    ->Stack(
         InlineButton::Login('Login','https://example.com/login'),
         InlineButton::Url('Visit Homepage','https://example.com')
-    ])
-    ->inint();
+    )
+    ->init();
 ```
 
 

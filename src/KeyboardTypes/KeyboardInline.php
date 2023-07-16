@@ -2,10 +2,9 @@
 
 namespace EasyKeyboard\FluentKeyboard\KeyboardTypes;
 
-use EasyKeyboard\FluentKeyboard\Exception;
 use EasyKeyboard\FluentKeyboard\Keyboard;
 
-class KeyboardInline extends Keyboard
+final class KeyboardInline extends Keyboard
 {
     public function __construct()
     {

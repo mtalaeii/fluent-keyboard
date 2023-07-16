@@ -4,7 +4,7 @@ namespace EasyKeyboard\FluentKeyboard;
 
 use ArrayAccess;
 
-abstract class Keyboard implements ArrayAccess
+abstract class Keyboard
 {
     protected int $currentRowIndex = 0;
     protected array $data = [
@@ -30,9 +30,9 @@ abstract class Keyboard implements ArrayAccess
     {
         if ((!isset($arguments[0]) || $arguments[0])) {
             $fn = match ($name) {
-                'singleUse' => fn(bool $singleUse = true) => $this->data['singleUse'] = $singleUse,
-                'resize' => fn(bool $resize = true) => $this->data['resize'] = $resize,
-                'selective' => fn(bool $selective = true) => $this->data['selective'] = $selective,
+                'resize',
+                'selective' => fn(bool $option = true) => $this->data[$name] = $option,
+                'singleUse' => fn(bool $option = true) => $this->data['single_use'] = $option,
                 'placeholder' => function (string $placeholder = null) {
                     $length = mb_strlen($placeholder);
                     if (isset($placeholder) && $length >= 0 && $length <= 64) {
@@ -42,14 +42,14 @@ abstract class Keyboard implements ArrayAccess
                     }
                 },
                 default => throw new Exception(
-                    sprintf('Call to undefined method %s()', $name)
+                    sprintf('Call to undefined method %s::%s()', $this::class, $name)
                 )
             };
             isset($arguments[0]) ? $fn($arguments[0]) : $fn();
             return $this;
         }
         throw new Exception(
-            sprintf('Call to undefined method %s()', $name)
+            sprintf('Call to undefined method %s::%s()', $this::class, $name)
         );
     }
 
@@ -91,29 +91,5 @@ abstract class Keyboard implements ArrayAccess
             $counter++;
         }, $button);
         return $this;
-    }
-
-    public function offsetSet($offset, $value): void
-    {
-        if (is_null($offset)) {
-            $this->data[] = $value;
-        } else {
-            $this->data[$offset] = $value;
-        }
-    }
-
-    public function offsetExists($offset): bool
-    {
-        return isset($this->data[$offset]);
-    }
-
-    public function offsetUnset($offset): void
-    {
-        unset($this->data[$offset]);
-    }
-
-    public function offsetGet($offset): mixed
-    {
-        return $this->data[$offset] ?? null;
     }
 }

@@ -16,11 +16,6 @@ abstract class Button
         $this->keyboard = $data + $this->keyboard;
     }
 
-    protected static function createButton(string $type, array $data): array
-    {
-        return ['_' => $type] + $data;
-    }
-
 //    public static function Game(string $text): static
 //    {
 //        $data = self::createButton(

@@ -50,10 +50,10 @@ final class InlineButton extends Button
      * @param string $text
      * @param string $url
      * @param int $id
-     * @param string $fwd_text
+     * @param string|null $fwd_text
      * @return InlineButton
      */
-    public static function Login(string $text, string $url, int $id = 0, string $fwd_text = null): InlineButton
+    public static function Login(string $text, string $url, int $id = 0, ?string $fwd_text = null): InlineButton
     {
         $data = [
             '_'         => 'keyboardButtonUrlAuth',
@@ -101,7 +101,13 @@ final class InlineButton extends Button
         return new static($data);
     }
 
-    public static function Game(string $text): static
+    /**
+     * Create game button for your inline game
+     *
+     * @param string $text
+     * @return InlineButton
+     */
+    public static function Game(string $text): InlineButton
     {
         $data = [
             '_'    => 'keyboardButtonGame',
@@ -110,7 +116,13 @@ final class InlineButton extends Button
         return new static($data);
     }
 
-    public static function Buy(string $text): static
+    /**
+     * Create a buy button for your inline buy request(similar to webapps)
+     *
+     * @param string $text
+     * @return InlineButton
+     */
+    public static function Buy(string $text): InlineButton
     {
         $data = [
             '_'    => 'keyboardButtonBuy',

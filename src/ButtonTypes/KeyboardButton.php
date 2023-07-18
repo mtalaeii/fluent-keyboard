@@ -14,8 +14,8 @@ class KeyboardButton extends Button
     public static function Profile(string $text, int $user_id): KeyboardButton
     {
         $data = [
-            '_'       => 'keyboardButtonUserProfile',
-            'text'    => $text,
+            '_' => 'keyboardButtonUserProfile',
+            'text' => $text,
             'user_id' => $user_id
         ];
         return new static($data);
@@ -31,9 +31,9 @@ class KeyboardButton extends Button
     public static function Poll(string $text, bool $quiz = false): KeyboardButton
     {
         $data = [
-            '_'    => 'keyboardButtonRequestPoll',
-            'text' => $quiz,
-            'quiz' => $text ?? false
+            '_' => 'keyboardButtonRequestPoll',
+            'text' => $text,
+            'quiz' => $quiz
         ];
         return new static($data);
     }
@@ -47,7 +47,7 @@ class KeyboardButton extends Button
     public static function Location(string $text): KeyboardButton
     {
         $data = [
-            '_'    => 'keyboardButtonRequestGeoLocation',
+            '_' => 'keyboardButtonRequestGeoLocation',
             'text' => $text
         ];
         return new static($data);
@@ -62,7 +62,7 @@ class KeyboardButton extends Button
     public static function Phone(string $text): KeyboardButton
     {
         $data = [
-            '_'    => 'keyboardButtonRequestPhone',
+            '_' => 'keyboardButtonRequestPhone',
             'text' => $text
         ];
         return new static($data);
@@ -77,8 +77,25 @@ class KeyboardButton extends Button
     public static function Text(string $text): KeyboardButton
     {
         $data = [
-            '_'    => 'keyboardButton',
+            '_' => 'keyboardButton',
             'text' => $text
+        ];
+        return new static($data);
+    }
+
+    /**
+     * Create text button that open web app without requiring user information
+     *
+     * @param string $text
+     * @param string $url
+     * @return KeyboardButton
+     */
+    public static function SimpleWebApp(string $text, string $url): KeyboardButton
+    {
+        $data = [
+            '_' => 'keyboardButtonSimpleWebView',
+            'text' => $text,
+            'url' => $url
         ];
         return new static($data);
     }

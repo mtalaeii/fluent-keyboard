@@ -18,10 +18,10 @@ final class InlineButton extends Button
     public static function SwitchInline(string $text, string $query, bool $same_peer = true, array $peer_types = []): InlineButton
     {
         $data = [
-            '_'          => 'keyboardButtonSwitchInline',
-            'text'       => $text,
-            'query'      => $query,
-            'same_peer'  => $same_peer,
+            '_' => 'keyboardButtonSwitchInline',
+            'text' => $text,
+            'query' => $query,
+            'same_peer' => $same_peer,
             'peer_types' => $peer_types
         ];
         return new static($data);
@@ -37,9 +37,9 @@ final class InlineButton extends Button
     public static function WebApp(string $text, string $url): InlineButton
     {
         $data = [
-            '_'    => 'keyboardButtonWebView',
+            '_' => 'keyboardButtonWebView',
             'text' => $text,
-            'url'  => $url
+            'url' => $url
         ];
         return new static($data);
     }
@@ -49,18 +49,18 @@ final class InlineButton extends Button
      *
      * @param string $text
      * @param string $url
-     * @param int $id
+     * @param int $button_id
      * @param string|null $fwd_text
      * @return InlineButton
      */
-    public static function Login(string $text, string $url, int $id = 0, ?string $fwd_text = null): InlineButton
+    public static function Login(string $text, string $url, int $button_id = 0, ?string $fwd_text = null): InlineButton
     {
         $data = [
-            '_'         => 'keyboardButtonUrlAuth',
-            'text'      => $text,
-            'fwd_text'  => $url,
-            'url'       => $id,
-            'button_id' => $fwd_text
+            '_' => 'keyboardButtonUrlAuth',
+            'text' => $text,
+            'fwd_text' => $fwd_text,
+            'url' => $url,
+            'button_id' => $button_id
         ];
         return new static($data);
     }
@@ -76,9 +76,9 @@ final class InlineButton extends Button
     public static function CallBack(string $text, string $callback, bool $requires_password = false): InlineButton
     {
         $data = [
-            '_'                 => 'keyboardButtonCallback',
-            'text'              => $text,
-            'data'              => $callback,
+            '_' => 'keyboardButtonCallback',
+            'text' => $text,
+            'data' => $callback,
             'requires_password' => $requires_password
         ];
         return new static($data);
@@ -94,9 +94,9 @@ final class InlineButton extends Button
     public static function Url(string $text, string $url): InlineButton
     {
         $data = [
-            '_'    => 'keyboardButtonUrl',
+            '_' => 'keyboardButtonUrl',
             'text' => $text,
-            'url'  => $url
+            'url' => $url
         ];
         return new static($data);
     }
@@ -110,7 +110,7 @@ final class InlineButton extends Button
     public static function Game(string $text): InlineButton
     {
         $data = [
-            '_'    => 'keyboardButtonGame',
+            '_' => 'keyboardButtonGame',
             'text' => $text
         ];
         return new static($data);
@@ -125,7 +125,7 @@ final class InlineButton extends Button
     public static function Buy(string $text): InlineButton
     {
         $data = [
-            '_'    => 'keyboardButtonBuy',
+            '_' => 'keyboardButtonBuy',
             'text' => $text
         ];
         return new static($data);

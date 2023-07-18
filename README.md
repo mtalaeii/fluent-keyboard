@@ -172,9 +172,13 @@ KeyboardInline::make()
 KeyboardForceReply and KeyboardHide can be used the same way as a normal keyboard, but they do not receive any buttons:
 
 ```php
-$this->reply('Thank you',
-    reply_markup : KeyboardHide::make()->init()
-);
+#[FilterAnd(new FilterPrivate,new FilterIncoming)]
+public function handleExit(Message $message){
+    $message->reply('Thank you',
+        reply_markup : KeyboardHide::make()->init()
+    );
+}
+
 ```
 
 ```php

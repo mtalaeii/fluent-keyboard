@@ -19,7 +19,6 @@ trait EasyMarkup
         return $this->addButton(KeyboardButton::Text($text));
     }
 
-
     /**
      * @param string $text
      * @param int $user_id
@@ -42,7 +41,6 @@ trait EasyMarkup
         return $this->addButton(KeyboardButton::Poll($text, $quiz));
     }
 
-
     /**
      * Create text button that request location from user
      *
@@ -54,7 +52,6 @@ trait EasyMarkup
         return $this->addButton(KeyboardButton::Location($text));
     }
 
-
     /**
      * Create text button that request contact info from user
      *
@@ -65,7 +62,6 @@ trait EasyMarkup
     {
         return $this->addButton(KeyboardButton::Phone($text));
     }
-
 
     /**
      * Create text button that open web app without requiring user information

@@ -6,6 +6,7 @@ use EasyKeyboard\FluentKeyboard\Button;
 
 class KeyboardButton extends Button
 {
+
     /**
      * @param string $text
      * @param int $user_id

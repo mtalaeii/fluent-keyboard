@@ -1,6 +1,6 @@
 <?php
 
-namespace EasyKeyboard\FluentKeyboard\Docs;
+namespace EasyKeyboard\FluentKeyboard\Tools;
 
 use EasyKeyboard\FluentKeyboard\KeyboardTypes\{KeyboardForceReply, KeyboardMarkup};
 

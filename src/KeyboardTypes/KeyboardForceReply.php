@@ -2,7 +2,7 @@
 
 namespace EasyKeyboard\FluentKeyboard\KeyboardTypes;
 
-use EasyKeyboard\FluentKeyboard\Docs\KeyboardDocs;
+use EasyKeyboard\FluentKeyboard\Tools\KeyboardDocs;
 use EasyKeyboard\FluentKeyboard\Keyboard;
 
 /**

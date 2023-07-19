@@ -4,7 +4,6 @@ namespace EasyKeyboard\FluentKeyboard;
 
 abstract class Keyboard
 {
-    use EasyMarkup, EasyInline;
     protected int $currentRowIndex = 0;
     protected array $data = [
         'rows' => [

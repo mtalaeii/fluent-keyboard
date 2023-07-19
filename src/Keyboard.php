@@ -20,7 +20,7 @@ abstract class Keyboard
         return $this->data;
     }
 
-    public static function make(): static
+    public static function new(): static
     {
         return new static;
     }

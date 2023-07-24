@@ -146,7 +146,7 @@ final class InlineButton extends Button
             '_' => 'keyboardButtonRequestPeer',
             'text' => $text,
             'button_id' => $button_id,
-            'peer_type' => $peer_type
+            'peer_type' => $peer_type()
         ];
         return new static($data);
     }

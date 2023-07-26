@@ -4,6 +4,9 @@ namespace EasyKeyboard\FluentKeyboard\Tools;
 
 use EasyKeyboard\FluentKeyboard\ButtonTypes\InlineButton;
 use EasyKeyboard\FluentKeyboard\KeyboardTypes\KeyboardInline;
+use EasyKeyboard\FluentKeyboard\Tools\PeerTypes\RequestPeerTypeUser;
+use EasyKeyboard\FluentKeyboard\Tools\PeerTypes\RequestPeerTypeChat;
+use EasyKeyboard\FluentKeyboard\ChatAdminRights;
 
 trait EasyInline
 {
@@ -81,5 +84,75 @@ trait EasyInline
     public function addSwitchInline(string $text, string $query, bool $same_peer = true, array $peer_types = []): KeyboardInline
     {
         return $this->addButton(InlineButton::SwitchInline($text, $query, $same_peer, $peer_types));
+    }
+
+    /**
+     * Create a request peer user button
+     *
+     * @param string $text
+     * @param int $button_id
+     * @param bool $isBot
+     * @param bool $isPremium
+     * @return KeyboardInline
+     */
+    public function requestPeerUser(string $text, int $button_id, bool $isBot , bool $isPremium): KeyboardInline
+    {
+        $peerType = RequestPeerTypeUser::new($isBot, $isPremium);
+        return $this->addButton(InlineButton::Peer($text, $button_id, $peerType));
+    }
+
+    /**
+     * Create a request peer chat button
+     *
+     * @param string $text
+     * @param int $button_id
+     * @param bool $isBot
+     * @param bool $isPremium
+     * @return KeyboardInline
+     */
+    public function requestPeerChat(
+        string $text,
+        int  $button_id,
+        bool $creator = false,
+        bool $has_username = false,
+        bool $forum = false,
+        ?array $user_admin_rights = null,
+        ?array $bot_admin_rights = null): KeyboardInline
+    {
+        $botRights = ChatAdminRights::new(
+            ...array_filter($user_admin_rights, 'is_bool')
+        );
+        $adminRights = ChatAdminRights::new(
+           ...array_filter($bot_admin_rights, 'is_bool')
+        );
+        $peerType = RequestPeerTypeChat::new($creator, $has_username, $forum, $botRights, $adminRights);
+        return $this->addButton(InlineButton::Peer($text, $button_id, $peerType));
+    }
+
+    /**
+     * Create a request peer broadcast button
+     *
+     * @param string $text
+     * @param int $button_id
+     * @param bool $isBot
+     * @param bool $isPremium
+     * @return KeyboardInline
+     */
+    public function requestPeerBroadcast(
+        string $text,
+        int  $button_id,
+        bool $creator = false,
+        bool $has_username = false,
+        ?array $user_admin_rights = null,
+        ?array $bot_admin_rights = null): KeyboardInline
+    {
+        $botRights = ChatAdminRights::new(
+            ...array_filter($user_admin_rights, 'is_bool')
+        );
+        $adminRights = ChatAdminRights::new(
+           ...array_filter($bot_admin_rights, 'is_bool')
+        );
+        $peerType = RequestPeerTypeChat::new($creator, $has_username, $botRights, $adminRights);
+        return $this->addButton(InlineButton::Peer($text, $button_id, $peerType));
     }
 }

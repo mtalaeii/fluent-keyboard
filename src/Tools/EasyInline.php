@@ -6,6 +6,7 @@ use EasyKeyboard\FluentKeyboard\ButtonTypes\InlineButton;
 use EasyKeyboard\FluentKeyboard\KeyboardTypes\KeyboardInline;
 use EasyKeyboard\FluentKeyboard\Tools\PeerTypes\RequestPeerTypeUser;
 use EasyKeyboard\FluentKeyboard\Tools\PeerTypes\RequestPeerTypeChat;
+use EasyKeyboard\FluentKeyboard\Tools\PeerTypes\RequestPeerTypeBroadcast;
 use EasyKeyboard\FluentKeyboard\ChatAdminRights;
 
 trait EasyInline
@@ -95,7 +96,7 @@ trait EasyInline
      * @param bool $isPremium
      * @return KeyboardInline
      */
-    public function requestPeerUser(string $text, int $button_id, bool $isBot , bool $isPremium): KeyboardInline
+    public function requestPeerUser(string $text, int $button_id, bool $isBot = false, bool $isPremium = false): KeyboardInline
     {
         $peerType = RequestPeerTypeUser::new($isBot, $isPremium);
         return $this->addButton(InlineButton::Peer($text, $button_id, $peerType));
@@ -152,7 +153,7 @@ trait EasyInline
         $adminRights = ChatAdminRights::new(
            ...array_filter($bot_admin_rights, 'is_bool')
         );
-        $peerType = RequestPeerTypeChat::new($creator, $has_username, $botRights, $adminRights);
+        $peerType = RequestPeerTypeBroadcast::new($creator, $has_username, $botRights, $adminRights);
         return $this->addButton(InlineButton::Peer($text, $button_id, $peerType));
     }
 }

@@ -99,8 +99,11 @@ trait EasyMarkup
      *
      * @param string $text
      * @param int $button_id
-     * @param bool $isBot
-     * @param bool $isPremium
+     * @param bool $creator
+     * @param bool $has_username
+     * @param bool $forum
+     * @param ChatAdminRights|null $user_admin_rights
+     * @param ChatAdminRights|null $bot_admin_rights
      * @return KeyboardMarkup
      */
     public function requestChat(
@@ -124,8 +127,10 @@ trait EasyMarkup
      *
      * @param string $text
      * @param int $button_id
-     * @param bool $isBot
-     * @param bool $isPremium
+     * @param bool $creator
+     * @param bool $has_username
+     * @param ChatAdminRights|null $user_admin_rights
+     * @param ChatAdminRights|null $bot_admin_rights
      * @return KeyboardMarkup
      */
     public function requestChannel(

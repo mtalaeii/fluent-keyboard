@@ -4,15 +4,16 @@ namespace EasyKeyboard\FluentKeyboard;
 
 final class ChatAdminRights
 {
-    private static array $adminRights = [];
+    private array $adminRights = [];
+
     public function __invoke(): array
     {
-        return self::$adminRights;
+        return $this->adminRights;
     }
 
     public function __construct(array $data)
     {
-        self::$adminRights += $data;
+        $this->adminRights += $data;
     }
 
     public static function new(
@@ -30,21 +31,21 @@ final class ChatAdminRights
         bool $manage_topics = true,
     ): self
     {
-        self::$adminRights = [
-            '_' => 'chatAdminRights',
-            'change_info' => $change_info,
-            'post_messages' => $post_messages,
-            'edit_messages' => $edit_messages,
+        $adminRights = [
+            '_'               => 'chatAdminRights',
+            'change_info'     => $change_info,
+            'post_messages'   => $post_messages,
+            'edit_messages'   => $edit_messages,
             'delete_messages' => $delete_messages,
-            'ban_users' => $ban_users,
-            'invite_users' => $invite_users,
-            'pin_messages' => $pin_messages,
-            'add_admins' => $add_admins,
-            'anonymous' => $anonymous,
-            'manage_call' => $manage_call,
-            'other' => $other,
-            'manage_topics' => $manage_topics
+            'ban_users'       => $ban_users,
+            'invite_users'    => $invite_users,
+            'pin_messages'    => $pin_messages,
+            'add_admins'      => $add_admins,
+            'anonymous'       => $anonymous,
+            'manage_call'     => $manage_call,
+            'other'           => $other,
+            'manage_topics'   => $manage_topics
         ];
-        return new static(self::$adminRights);
+        return new static($adminRights);
     }
 }

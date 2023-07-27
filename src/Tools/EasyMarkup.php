@@ -89,7 +89,7 @@ trait EasyMarkup
      * @param bool $isPremium
      * @return KeyboardMarkup
      */
-    public function requestPeerUser(string $text, int $button_id, bool $isBot = false, bool $isPremium = false): KeyboardMarkup
+    public function requestUser(string $text, int $button_id, bool $isBot = false, bool $isPremium = false): KeyboardMarkup
     {
         $peerType = RequestPeerTypeUser::new($isBot, $isPremium);
         return $this->addButton(KeyboardButton::Peer($text, $button_id, $peerType));
@@ -104,7 +104,7 @@ trait EasyMarkup
      * @param bool $isPremium
      * @return KeyboardMarkup
      */
-    public function requestPeerChat(
+    public function requestChat(
         string $text,
         int  $button_id,
         bool $creator = false,
@@ -132,7 +132,7 @@ trait EasyMarkup
      * @param bool $isPremium
      * @return KeyboardMarkup
      */
-    public function requestPeerBroadcast(
+    public function requestChannel(
         string $text,
         int  $button_id,
         bool $creator = false,

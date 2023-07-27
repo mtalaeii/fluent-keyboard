@@ -3,7 +3,6 @@
 namespace EasyKeyboard\FluentKeyboard\ButtonTypes;
 
 use EasyKeyboard\FluentKeyboard\Button;
-use EasyKeyboard\FluentKeyboard\Tools\PeerTypes\RequestPeerType;
 
 final class InlineButton extends Button
 {
@@ -128,25 +127,6 @@ final class InlineButton extends Button
         $data = [
             '_' => 'keyboardButtonBuy',
             'text' => $text
-        ];
-        return new static($data);
-    }
-
-    /**
-     * Create a request peer button
-     *
-     * @param string $text
-     * @param int $button_id
-     * @param RequestPeerType $peer_type
-     * @return InlineButton
-     */
-    public static function Peer(string $text, int $button_id, RequestPeerType $peer_type): InlineButton
-    {
-        $data = [
-            '_' => 'keyboardButtonRequestPeer',
-            'text' => $text,
-            'button_id' => $button_id,
-            'peer_type' => $peer_type()
         ];
         return new static($data);
     }

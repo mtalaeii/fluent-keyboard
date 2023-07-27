@@ -6,12 +6,6 @@ use EasyKeyboard\FluentKeyboard\ChatAdminRights;
 
 class RequestPeerTypeChat extends RequestPeerType
 {
-    protected static array $data = [];
-
-    protected function setPredict()
-    {
-        self::$data['_'] = ['requestPeerTypeChat'];
-    }
 
     public static function new(
         bool             $creator = false,
@@ -21,13 +15,14 @@ class RequestPeerTypeChat extends RequestPeerType
         ?ChatAdminRights $bot_admin_rights = null
     ): self
     {
-        self::$data += [
+        $data = [
+            '_' => 'requestPeerTypeChat',
             'creator' => $creator,
             'has_username' => $has_username,
             'forum' => $forum,
             'user_admin_rights' => is_callable($user_admin_rights) ?  $user_admin_rights(): [],
             'bot_admin_rights' => is_callable($bot_admin_rights) ?  $bot_admin_rights(): []
         ];
-        return new static(self::$data);
+        return new static($data);
     }
 }

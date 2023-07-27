@@ -17,18 +17,18 @@ final class ChatAdminRights
     }
 
     public static function new(
-        bool $change_info = true,
-        bool $post_messages = true,
-        bool $edit_messages = true,
-        bool $delete_messages = true,
-        bool $ban_users = true,
-        bool $invite_users = true,
-        bool $pin_messages = true,
-        bool $add_admins = true,
-        bool $anonymous = true,
-        bool $manage_call = true,
-        bool $other = true,
-        bool $manage_topics = true,
+        bool $change_info     = false,
+        bool $post_messages   = false,
+        bool $edit_messages   = false,
+        bool $delete_messages = false,
+        bool $ban_users       = false,
+        bool $invite_users    = false,
+        bool $pin_messages    = false,
+        bool $add_admins      = false,
+        bool $anonymous       = false,
+        bool $manage_call     = false,
+        bool $other           = false,
+        bool $manage_topics   = false,
     ): self
     {
         $adminRights = [

@@ -8,11 +8,9 @@ use EasyKeyboard\FluentKeyboard\Tools\PeerTypes\RequestPeerTypeUser;
 use EasyKeyboard\FluentKeyboard\Tools\PeerTypes\RequestPeerTypeChat;
 use EasyKeyboard\FluentKeyboard\Tools\PeerTypes\RequestPeerTypeBroadcast;
 use EasyKeyboard\FluentKeyboard\ChatAdminRights;
-use EasyKeyboard\FluentKeyboard\Keyboard;
 
 trait EasyMarkup
 {
-
     /**
      * create simple text keyboard
      *
@@ -33,6 +31,19 @@ trait EasyMarkup
     {
         return $this->addButton(KeyboardButton::Profile($text, $user_id));
     }
+    
+    /**
+     * Create text button that open web app without requiring user information
+     *
+     * @param string $text
+     * @param string $url
+     * @return KeyboardMarkup
+     */
+    public function addSimpleWebApp(string $text, string $url): KeyboardMarkup
+    {
+        return $this->addButton(KeyboardButton::SimpleWebApp($text, $url));
+    }
+    
 
     /**
      * Create text button that request poll from user
@@ -69,18 +80,6 @@ trait EasyMarkup
     }
 
     /**
-     * Create text button that open web app without requiring user information
-     *
-     * @param string $text
-     * @param string $url
-     * @return KeyboardMarkup
-     */
-    public function addSimpleWebApp(string $text, string $url): KeyboardMarkup
-    {
-        return $this->addButton(KeyboardButton::SimpleWebApp($text, $url));
-    }
-    
-    /**
      * Create a request peer user button
      *
      * @param string $text
@@ -107,19 +106,16 @@ trait EasyMarkup
     public function requestChat(
         string $text,
         int  $button_id,
-        bool $creator = false,
+        bool $creator      = false,
         bool $has_username = false,
-        bool $forum = false,
-        array $user_admin_rights = [],
-        array $bot_admin_rights = []): KeyboardMarkup
+        bool $forum        = false,
+        ?ChatAdminRights $user_admin_rights = null,
+        ?ChatAdminRights $bot_admin_rights  = null): KeyboardMarkup
     {
-        $botRights = ChatAdminRights::new(
-            ...array_filter($user_admin_rights, 'is_bool')
+        $peerType = RequestPeerTypeChat::new(
+            $creator, $has_username, $forum,
+            $bot_admin_rights, $user_admin_rights
         );
-        $adminRights = ChatAdminRights::new(
-           ...array_filter($bot_admin_rights, 'is_bool')
-        );
-        $peerType = RequestPeerTypeChat::new($creator, $has_username, $forum, $botRights, $adminRights);
         return $this->addButton(KeyboardButton::Peer($text, $button_id, $peerType));
     }
 
@@ -135,18 +131,12 @@ trait EasyMarkup
     public function requestChannel(
         string $text,
         int  $button_id,
-        bool $creator = false,
+        bool $creator      = false,
         bool $has_username = false,
-        array $user_admin_rights = [],
-        array $bot_admin_rights = []): KeyboardMarkup
+        ?ChatAdminRights $user_admin_rights = null,
+        ?ChatAdminRights $bot_admin_rights  = null): KeyboardMarkup
     {
-        $botRights = ChatAdminRights::new(
-            ...array_filter($user_admin_rights, 'is_bool')
-        );
-        $adminRights = ChatAdminRights::new(
-           ...array_filter($bot_admin_rights, 'is_bool')
-        );
-        $peerType = RequestPeerTypeBroadcast::new($creator, $has_username, $botRights, $adminRights);
+        $peerType = RequestPeerTypeBroadcast::new($creator, $has_username, $bot_admin_rights, $user_admin_rights);
         return $this->addButton(KeyboardButton::Peer($text, $button_id, $peerType));
     }
 }

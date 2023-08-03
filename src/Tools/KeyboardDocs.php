@@ -34,10 +34,10 @@ interface KeyboardDocs
     /**
      * Create placeholder for current keyboard it can be also empty string
      *
-     * @param bool|null $placeholder
+     * @param string|null $placeholder
      * @return KeyboardMarkup|KeyboardForceReply
      */
-    public function placeholder(?bool $placeholder = null): KeyboardMarkup|KeyboardForceReply;
+    public function placeholder(?string $placeholder = null): KeyboardMarkup|KeyboardForceReply;
 
 
 }

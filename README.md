@@ -21,8 +21,8 @@ A fluent keyboard created for MTProto syntax
                     <li><a href="#as-stack">As Stack</a></li>
                 </ol>
             </li>
-            <li><a href="#forcereply-and-replykeyboardremove">ForceReply and ReplyKeyboardRemove</a></li>
-            <li><a href="#peer-type">Keyboard Peer Type</a></li>
+            <li><a href="#keyboardforcereply-and-keyboardhide">KeyboardForceReply and KeyboardHide</a></li>
+            <li><a href="#keyboard-peer-type">Keyboard Peer Type</a></li>
         </ol>
     </li>
   </ol>

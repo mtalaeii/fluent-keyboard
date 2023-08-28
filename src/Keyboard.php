@@ -11,7 +11,7 @@ abstract class Keyboard
         ]
     ];
 
-    public function init(): array
+    public function build(): array
     {
         $keyboard = &$this->data['rows'];
         if (empty($keyboard[$this->currentRowIndex]['buttons']))

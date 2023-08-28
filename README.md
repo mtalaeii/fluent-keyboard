@@ -22,6 +22,7 @@ A fluent keyboard created for MTProto syntax
                 </ol>
             </li>
             <li><a href="#forcereply-and-replykeyboardremove">ForceReply and ReplyKeyboardRemove</a></li>
+            <li><a href="#peer-type">Keyboard Peer Type</a></li>
         </ol>
     </li>
   </ol>
@@ -51,7 +52,7 @@ $this->messages->sendMessage(
         ->singleUse()
         ->addButton(KeyboardButton::Text('Cancel'))
         ->addButton(KeyboardButton::Text('OK'))
-        ->init()
+        ->build()
 );
 ```
 
@@ -72,7 +73,7 @@ After that you can chain methods to set additional fields that are available in 
 ```php
 KeyboardMarkup::new()
     ->placeholder('Placeholder')
-    ->init();
+    ->build();
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -106,7 +107,7 @@ KeyboardMarkup::new()
         KeyboardButton::Text('Cancel'),
         KeyboardButton::Text('OK')
     )
-    ->init();
+    ->build();
 ```
 
 If you need more than one row, call `row()` multiple times:
@@ -122,7 +123,7 @@ KeyboardInline::new()
         InlineButton::Callback('prev','page-prev'),
         InlineButton::Callback('next','page-next')
     )
-    ->init();
+    ->build();
 ```
 
 #### By Button
@@ -131,7 +132,7 @@ KeyboardInline::new()
 KeyboardMarkup::new()
     ->addButton(KeyboardButton::Text('First Button'))
     ->addButton(KeyboardButton::Text('Second Button'))
-    ->init();
+    ->build();
 ```
 
 If you need more than one row, just call the row method without arguments, and continue calling `addButton()`:
@@ -143,7 +144,7 @@ KeyboardInline::new()
     ->row()
     ->addButton(InlineButton::Callback('C','answer-c'))
     ->addButton(InlineButton::Callback('D','answer-d'))
-    ->init();
+    ->build();
 ```
 
 It's up to you if you define your buttons inline like in these examples or if you'd like to generate a whole row beforehand and
@@ -159,7 +160,7 @@ KeyboardInline::new()
         InlineButton::Login('Login','https://example.com/login'),
         InlineButton::Url('Visit Homepage','https://example.com')
     )
-    ->init();
+    ->build();
 ```
 
 
@@ -175,7 +176,7 @@ KeyboardForceReply and KeyboardHide can be used the same way as a normal keyboar
 #[FilterAnd(new FilterPrivate,new FilterIncoming)]
 public function handleExit(Message $message){
     $message->reply('Thank you',
-        reply_markup : KeyboardHide::new()->init()
+        reply_markup : KeyboardHide::new()->build()
     );
 }
 
@@ -185,8 +186,39 @@ public function handleExit(Message $message){
 $data['reply_markup'] = KeyboardForceReply::new()
     ->addButton(KeyboardButton::Text('Hello please reply'))
     ->placeholder('must reply')
-    ->init();
+    ->build();
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+### Keyboard Peer Type
+
+We have 3 types of peer type can be requested by bots RequestPeerTypeUser , RequestPeerTypeChat and RequestPeerTypeBroadcast
+
+```php
+KeyboardMarkup::new()
+    ->addButton(KeyboardButton::Peer('Request for user',0,RequestPeerTypeUser::new()));
+```
+```php
+KeyboardMarkup::new()
+    ->addButton(KeyboardButton::Peer('Request for chat',1,RequestPeerTypeChat::new()));
+```
+```php
+KeyboardMarkup::new()
+    ->addButton(KeyboardButton::Peer('Request for broadcast',2,RequestPeerTypeBroadcast::new()));
+```
+**You can also use easier syntax to create better one**
+
+```php
+KeyboardMarkup::new()
+    ->requestUser('Request for user',0);
+```
+```php
+KeyboardMarkup::new()
+    ->requestChat('Request for chat',1);
+```
+```php
+KeyboardMarkup::new()
+    ->requestChannel('Request for broadcast',2);
+```
+<p align="right">(<a href="#top">back to top</a>)</p>

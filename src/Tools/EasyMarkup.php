@@ -23,6 +23,23 @@ trait EasyMarkup
     }
 
     /**
+     * create simple texts keyboard
+     * 
+     * @param array $keyboards
+     * @return KeyboardMarkup
+     */
+    public function addTexts(... $keyboards): KeyboardMarkup
+    {
+        $callabe = function(array $row)
+        {
+            array_map($this->addText(...), $row);
+            $this->row();
+        };
+        array_map($callabe, $keyboards);
+        return $this;
+    }
+
+    /**
      * @param string $text
      * @param int $user_id
      * @return KeyboardMarkup

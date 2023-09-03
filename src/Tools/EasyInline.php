@@ -21,6 +21,23 @@ trait EasyInline
     }
 
     /**
+     * Create inline buttons with callback data
+     * 
+     * @param array $keyboards
+     * @return KeyboardInline
+     */
+    public function addCallbacks(... $keyboards): KeyboardInline
+    {
+        $callabe = function(array $row)
+        {
+            array_map($this->addCallback(...), array_keys($row), $row);
+            $this->row();
+        };
+        array_map($callabe, $keyboards);
+        return $this;
+    }
+
+    /**
      * Create Inline webapp button
      *
      * @param string $text

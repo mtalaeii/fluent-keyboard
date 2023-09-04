@@ -2,6 +2,12 @@
 
 namespace EasyKeyboard\FluentKeyboard;
 
+use EasyKeyboard\FluentKeyboard\ButtonTypes\InlineButton;
+use EasyKeyboard\FluentKeyboard\KeyboardTypes\KeyboardForceReply;
+use EasyKeyboard\FluentKeyboard\KeyboardTypes\KeyboardHide;
+use EasyKeyboard\FluentKeyboard\KeyboardTypes\KeyboardInline;
+use EasyKeyboard\FluentKeyboard\KeyboardTypes\KeyboardMarkup;
+
 abstract class Keyboard
 {
     protected int $currentRowIndex = 0;
@@ -18,6 +24,32 @@ abstract class Keyboard
             unset($keyboard[$this->currentRowIndex]);
 
         return $this->data;
+    }
+
+    public static function fromRawReplyMarkup(array $rawReplyMarkup): ?self
+    {
+        $type = $rawReplyMarkup['_'];
+        $buttons = array_column($rawReplyMarkup['rows'], 'buttons');
+        $buttonObjects = array_map($fn = function (array $button) use (&$fn) {
+            $type = $button['_'] ?? null;
+            return match ($type) {
+                'keyboardButtonSwitchInline' => InlineButton::SwitchInline($button['text'], $button['query'], $button['same_peer'] ?? false, $button['peer_types'] ?? []),
+                'keyboardButtonWebView' => InlineButton::WebApp($button['text'], $button['url']),
+                'keyboardButtonUrlAuth' => InlineButton::Login($button['text'], $button['url'], $button['button_id'] ?? 0, $button['fwd_text'] ?? ''),
+                'keyboardButtonCallback' => InlineButton::CallBack($button['text'], $button['data'], $button['requires_password'] ?? false),
+                'keyboardButtonUrl' => InlineButton::Url($button['text'], $button['url']),
+                'keyboardButtonGame' => InlineButton::Game($button['text']),
+                'keyboardButtonBuy' => InlineButton::Buy($button['text']),
+                default => array_map($fn,array_values($button))
+            };
+        }, $buttons);
+        return match ($type){
+            'replyKeyboardHide' => KeyboardHide::new(),
+            'replyKeyboardForceReply' => KeyboardForceReply::new(),
+            'replyInlineMarkup' => KeyboardInline::new()->addButton(...$buttonObjects),
+            'replyKeyboardMarkup' => KeyboardMarkup::new()->addButton(...$buttonObjects),
+            default => null
+        };
     }
 
     public static function new(): static

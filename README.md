@@ -125,7 +125,27 @@ KeyboardInline::new()
     )
     ->build();
 ```
-
+You can add array of callbacks or texts keyboard in another way!
+```php
+KeyboardInline::new()
+    ->addCallbacks([
+        '1' => 'page-1',
+        '2' => 'page-2',
+        '3' => 'page-3',
+    ],[
+        'prev' => 'page-prev',
+        'next' => 'page-next'
+    ])
+    ->build()
+```
+```php
+KeyboardMarkup::new()
+    ->addTexts([
+       'Cancel',
+       'Ok'
+    ])
+    ->build();
+```
 #### By Button
 
 ```php

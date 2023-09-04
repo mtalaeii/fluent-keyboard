@@ -29,25 +29,28 @@ abstract class Keyboard
     public static function fromRawReplyMarkup(array $rawReplyMarkup): ?self
     {
         $type = $rawReplyMarkup['_'];
-        $buttons = array_column($rawReplyMarkup['rows'], 'buttons');
-        $buttonObjects = array_map($fn = function (array $button) use (&$fn) {
-            $type = $button['_'] ?? null;
-            return match ($type) {
-                'keyboardButtonSwitchInline' => InlineButton::SwitchInline($button['text'], $button['query'], $button['same_peer'] ?? false, $button['peer_types'] ?? []),
-                'keyboardButtonWebView' => InlineButton::WebApp($button['text'], $button['url']),
-                'keyboardButtonUrlAuth' => InlineButton::Login($button['text'], $button['url'], $button['button_id'] ?? 0, $button['fwd_text'] ?? ''),
-                'keyboardButtonCallback' => InlineButton::CallBack($button['text'], $button['data'], $button['requires_password'] ?? false),
-                'keyboardButtonUrl' => InlineButton::Url($button['text'], $button['url']),
-                'keyboardButtonGame' => InlineButton::Game($button['text']),
-                'keyboardButtonBuy' => InlineButton::Buy($button['text']),
-                default => array_map($fn,array_values($button))
-            };
-        }, $buttons);
-        return match ($type){
+        $rows = array_column($rawReplyMarkup['rows'], 'buttons');
+        foreach ($rows as &$row)
+        {
+            foreach ($row as &$button)
+            {
+                $typeButton = $button['_'] ?? null;
+                $button = match ($typeButton) {
+                    'keyboardButtonSwitchInline' => InlineButton::SwitchInline($button['text'], $button['query'], $button['same_peer'] ?? false, $button['peer_types'] ?? []),
+                    'keyboardButtonWebView' => InlineButton::WebApp($button['text'], $button['url']),
+                    'keyboardButtonUrlAuth' => InlineButton::Login($button['text'], $button['url'], $button['button_id'] ?? 0, $button['fwd_text'] ?? ''),
+                    'keyboardButtonCallback' => InlineButton::CallBack($button['text'], $button['data'], $button['requires_password'] ?? false),
+                    'keyboardButtonUrl' => InlineButton::Url($button['text'], $button['url']),
+                    'keyboardButtonGame' => InlineButton::Game($button['text']),
+                    'keyboardButtonBuy' => InlineButton::Buy($button['text']),
+                };
+            }
+        }
+        return match ($type) {
             'replyKeyboardHide' => KeyboardHide::new(),
             'replyKeyboardForceReply' => KeyboardForceReply::new(),
-            'replyInlineMarkup' => KeyboardInline::new()->addButton(...$buttonObjects),
-            'replyKeyboardMarkup' => KeyboardMarkup::new()->addButton(...$buttonObjects),
+            'replyInlineMarkup' => KeyboardInline::new()->addButtons(...$rows),
+            'replyKeyboardMarkup' => KeyboardMarkup::new()->addButtons(...$rows),
             default => null
         };
     }
@@ -92,6 +95,16 @@ abstract class Keyboard
         $row = &$this->data['rows'][$this->currentRowIndex];
         $buttons = array_map(fn($val) => $val(), $buttons);
         $row['buttons'] = array_merge($row['buttons'] ?? [], $buttons);
+        return $this;
+    }
+
+    protected function addButtons(array $rows)
+    {
+        echo json_encode($rows, 448);
+        array_map(
+            fn(Button $button) => $this->Stack($button),
+            $rows
+        );
         return $this;
     }
 

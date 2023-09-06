@@ -34,6 +34,12 @@ abstract class Keyboard
         $rows = array_column($rawReplyMarkup['rows'], 'buttons');
         if (!empty($rows)) {
             /** @var KeyboardMarkup|KeyboardInline $keyboard */
+            $options = array_filter([
+                'selective' => $rawReplyMarkup['selective'] ?? null,
+                'resize' => $rawReplyMarkup['resize'] ?? null,
+                'placeholder' => $rawReplyMarkup['placeholder'] ?? null,
+                'singleUse' => $rawReplyMarkup['single_use'] ?? null
+            ]);
             $keyboard = match ($type) {
                 'replyInlineMarkup' => KeyboardInline::new(),
                 'replyKeyboardMarkup' => KeyboardMarkup::new()
@@ -59,6 +65,7 @@ abstract class Keyboard
                 }
                 $keyboard->row();
             }
+            array_walk($options,fn(string|bool $value,string $key) => $keyboard->{$key}($value));
             return $keyboard;
         }
 

@@ -17,8 +17,8 @@ class RequestPeerTypeBroadcast extends RequestPeerType
             '_' => 'requestPeerTypeBroadcast',
             'creator'      => $creator,
             'has_username' => $has_username,
-            'user_admin_rights' => is_callable($user_admin_rights) ?  $user_admin_rights(): [],
-            'bot_admin_rights'  => is_callable($bot_admin_rights)  ?  $bot_admin_rights() : []
+            'user_admin_rights' => is_callable($user_admin_rights) ?  $user_admin_rights(): ChatAdminRights::new()(),
+            'bot_admin_rights'  => is_callable($bot_admin_rights)  ?  $bot_admin_rights() : ChatAdminRights::new()()
         ];
         return new static($data);
     }

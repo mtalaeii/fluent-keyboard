@@ -23,6 +23,7 @@ A fluent keyboard created for MTProto syntax
             </li>
             <li><a href="#keyboardforcereply-and-keyboardhide">KeyboardForceReply and KeyboardHide</a></li>
             <li><a href="#keyboard-peer-type">Keyboard Peer Type</a></li>
+            <li><a href="#convert-telegram-keyboard-to-fluent-keyboard">Convert Telegram Keyboard To Fluent Keyboard</a></li>
         </ol>
     </li>
   </ol>
@@ -136,7 +137,7 @@ KeyboardInline::new()
         'prev' => 'page-prev',
         'next' => 'page-next'
     ])
-    ->build()
+    ->build();
 ```
 ```php
 KeyboardMarkup::new()
@@ -240,5 +241,32 @@ KeyboardMarkup::new()
 ```php
 KeyboardMarkup::new()
     ->requestChannel('Request for broadcast',2);
+```
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+### Convert Telegram Keyboard To Fluent Keyboard
+
+You can now easily convert mtproto telegram keyboards to fluent keyboard for modify and ...
+using `fromRawReplyMarkup` methods! here is and example
+
+```php
+$fluentKeyboard = Keyboard::fromRawReplyMarkup($replyMarkup);
+```
+As you know `$fluentKeyboard` is object here and you can modify and add more buttons to it.
+here is an example if `$flunentKeyboard` instance of `KeyboardInline`
+
+```php
+$fluentKeyboard->addButton(InlineButton::Callback('End','End'));
+```
+At the end you can call `build` method on that and pass to some telegram method here is an
+example for [MadelineProto](https://github.com/danog/MadelineProto) :
+
+```php
+#[FilterAnd(new FilterPrivate,new FilterIncoming)]
+public function modify(Message $message){
+    $message->reply('That is new keyboard',
+        reply_markup : $fluentKeyboard->build()
+    );
+}
 ```
 <p align="right">(<a href="#top">back to top</a>)</p>

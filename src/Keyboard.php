@@ -188,6 +188,7 @@ abstract class Keyboard
      *
      * @param int $row
      * @param int $column
+     * @param int $count
      * @return KeyboardInline|KeyboardHide|KeyboardMarkup|KeyboardForceReply
      * @throws OutOfBoundsException
      */

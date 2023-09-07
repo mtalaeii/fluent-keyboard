@@ -191,10 +191,12 @@ abstract class Keyboard
      * @return KeyboardInline|KeyboardHide|KeyboardMarkup|KeyboardForceReply
      * @throws OutOfBoundsException
      */
-    public function removeFromCoordinates(int $row, int $column): self
+    public function removeFromCoordinates(int $row, int $column,int $count = 1): self
     {
         if (array_key_exists($row, $this->data['rows']) && array_key_exists($column, $this->data['rows'][$row]['buttons'])) {
-            unset($this->data['rows'][$row]['buttons'][$column]);
+            array_splice($this->data['rows'][$row]['buttons'], $column, $count);
+            $currentRow = $this->data['rows'][$row];
+            if(count($currentRow['buttons']) == 0) array_splice($this->data['rows'], $row, 1);
             return $this;
         }
         throw new OutOfBoundsException("Please be sure that $row and $column exists in array keys!");

@@ -202,16 +202,18 @@ we can add new button with it coordinates(raw and column) by calling `addToCoord
 This methods will add new button in the coordinate that you passed and shift next buttons of the coordinates.
 This picture show you the position of new button :
 
-![photo_2023-09-07_20-22-40](https://github.com/mtalaeii/fluent-keyboard/assets/73236713/3a3b5170-8a42-4f56-8156-cd4325f2cfdf)
-
+![Screenshot_20230907_212829](https://github.com/mtalaeii/fluent-keyboard/assets/73236713/89c0427e-c1c1-4fa2-8a2b-6d13ecf92286)
 ```php
 $keyboard->addToCoordinates(InlineButton::Callback('Middle','Middle'),0,1);
 ```
+The results should like this image :
+
+![Screenshot_20230907_213111](https://github.com/mtalaeii/fluent-keyboard/assets/73236713/ee148e4e-a990-402d-b99d-94065e77b3f5)
 
 You can also replace into specific coordinates unlike `addToCoordinates` the `replaceIntoCoordinates` method will replace
 your new button into passed coordinate for example if we want to replace Add in this example like this picture :
 
-![photo_2023-09-07_20-22-46](https://github.com/mtalaeii/fluent-keyboard/assets/73236713/e3810017-6cd0-470c-a7dd-82cdcdb5fa12)
+![Screenshot_20230907_213957](https://github.com/mtalaeii/fluent-keyboard/assets/73236713/080e58b0-ed06-44b9-bcbb-27ef2719c0ef)
 
 we should use this code :
 
@@ -220,7 +222,7 @@ $keyboard->replaceIntoCoordinates(InlineButton::Callback('Replaced Add','Add'),1
 ```
 The result should like this image :
 
-![photo_2023-09-07_21-02-15](https://github.com/mtalaeii/fluent-keyboard/assets/73236713/219c4115-d612-4627-8026-7cb054ea6ac9)
+![Screenshot_20230907_214232](https://github.com/mtalaeii/fluent-keyboard/assets/73236713/3dcd8604-9afd-4d99-93ba-ad18d260b48f)
 
 You can also remove the button by it's coordinates for example if we want remove Add button(in last example) 
 we should run this code:

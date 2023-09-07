@@ -18,6 +18,7 @@ A fluent keyboard created for MTProto syntax
                 <ol>
                     <li><a href="#by-row">By Row</a></li>
                     <li><a href="#by-button">By Button</a></li>
+                    <li><a href="#by-coordinates">By Coordinates</a></li>
                     <li><a href="#as-stack">As Stack</a></li>
                 </ol>
             </li>
@@ -170,6 +171,63 @@ KeyboardInline::new()
 
 It's up to you if you define your buttons inline like in these examples or if you'd like to generate a whole row beforehand and
 pass the variable to the `row()` method.
+
+You can remove the last button by calling `remove` method here is an example :
+
+```php
+KeyboardInline::new()
+    ->addButton(InlineButton::Callback('A','answer-a'))
+    ->addButton(InlineButton::Callback('B','answer-b'))
+    ->row()
+    ->addButton(InlineButton::Callback('C','answer-c'))
+    ->addButton(InlineButton::Callback('D','answer-d'))
+    ->remove()
+    ->build();
+```
+In this example button D will remove from buttons.
+
+#### By Coordinates
+
+You can add button to each coordinates you want! (Note that coordinates start from 0 just like array indexes.)
+for example imagine we have this keyboard :
+```php
+$keyboard = KeyboardInline::new()
+    ->addButton(InlineButton::Callback('Numbers','Numbers'))
+    ->addButton(InlineButton::Callback('Status','Status'))
+    ->row()
+    ->addButton(InlineButton::Callback('Add','Add'))
+    ->addButton(InlineButton::Callback('Remove','Remove'));
+```
+we can add new button with it coordinates(raw and column) by calling `addToCoordinates` method.
+This methods will add new button in the coordinate that you passed and shift next buttons of the coordinates.
+This picture show you the position of new button :
+
+![photo_2023-09-07_20-22-40](https://github.com/mtalaeii/fluent-keyboard/assets/73236713/3a3b5170-8a42-4f56-8156-cd4325f2cfdf)
+
+```php
+$keyboard->addToCoordinates(InlineButton::Callback('Middle','Middle'),0,1);
+```
+
+You can also replace into specific coordinates unlike `addToCoordinates` the `replaceIntoCoordinates` method will replace
+your new button into passed coordinate for example if we want to replace Add in this example like this picture :
+
+![photo_2023-09-07_20-22-46](https://github.com/mtalaeii/fluent-keyboard/assets/73236713/e3810017-6cd0-470c-a7dd-82cdcdb5fa12)
+
+we should use this code :
+
+```php
+$keyboard->replaceIntoCoordinates(InlineButton::Callback('Replaced Add','Add'),1,0);
+```
+The result should like this image :
+
+![photo_2023-09-07_21-02-15](https://github.com/mtalaeii/fluent-keyboard/assets/73236713/219c4115-d612-4627-8026-7cb054ea6ac9)
+
+You can also remove the button by it's coordinates for example if we want remove Add button(in last example) 
+we should run this code:
+
+```php
+$keyboard->removeFromCoordinates(1,0);
+```
 
 #### As Stack
 

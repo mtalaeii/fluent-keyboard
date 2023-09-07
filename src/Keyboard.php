@@ -9,7 +9,12 @@ use EasyKeyboard\FluentKeyboard\KeyboardTypes\KeyboardHide;
 use EasyKeyboard\FluentKeyboard\KeyboardTypes\KeyboardInline;
 use EasyKeyboard\FluentKeyboard\KeyboardTypes\KeyboardMarkup;
 use EasyKeyboard\FluentKeyboard\Tools\PeerTypes\RequestPeerType;
+use OutOfBoundsException;
+use RangeException;
 
+/**
+ * Main class for Keyboard.
+ */
 abstract class Keyboard
 {
     protected int $currentRowIndex = 0;
@@ -19,6 +24,11 @@ abstract class Keyboard
         ]
     ];
 
+    /**
+     * To cast fluent-keyboard to Telegram MTProto keyboard.
+     *
+     * @return array array of Telegram MTProto Keyboard
+     */
     public function build(): array
     {
         $keyboard = &$this->data['rows'];
@@ -27,6 +37,13 @@ abstract class Keyboard
 
         return $this->data;
     }
+
+    /**
+     * To cast Telegram MTProto keyboard to fluent-keyboard.
+     *
+     * @param array $rawReplyMarkup array of Telegram MTProto Keyboard
+     * @return KeyboardInline|KeyboardHide|KeyboardMarkup|KeyboardForceReply|null
+     */
 
     public static function fromRawReplyMarkup(array $rawReplyMarkup): ?self
     {
@@ -76,6 +93,11 @@ abstract class Keyboard
         };
     }
 
+    /**
+     * Create new fluent-keyboard.
+     *
+     * @return KeyboardInline|KeyboardHide|KeyboardMarkup|KeyboardForceReply
+     */
     public static function new(): static
     {
         return new static;
@@ -111,6 +133,13 @@ abstract class Keyboard
         );
     }
 
+    /**
+     * To add button(s) to fluent-keyboard.
+     *
+     * @param KeyboardButton|InlineButton ...$buttons
+     * @return KeyboardInline|KeyboardHide|KeyboardMarkup|KeyboardForceReply
+     */
+
     public function addButton(Button ...$buttons): self
     {
         $row = &$this->data['rows'][$this->currentRowIndex];
@@ -119,6 +148,83 @@ abstract class Keyboard
         return $this;
     }
 
+    /**
+     * To add a button by it coordinates to fluent-keyboard (Note that coordinates start from 0 look like arrays indexes).
+     *
+     * @param KeyboardButton|InlineButton $button
+     * @param int $row
+     * @param int $column
+     * @return KeyboardInline|KeyboardHide|KeyboardMarkup|KeyboardForceReply
+     */
+    public function addToCoordinates(Button $button, int $row, int $column): self
+    {
+        array_splice($this->data['rows'][$row]['buttons'], $column, 0, $button);
+        return $this;
+
+    }
+
+    /**
+     * To replace a button by it coordinates to fluent-keyboard (Note that coordinates start from 0 look like arrays indexes).
+     *
+     * @param KeyboardButton|InlineButton $button
+     * @param int $row
+     * @param int $column
+     * @return KeyboardInline|KeyboardHide|KeyboardMarkup|KeyboardForceReply
+     * @throws OutOfBoundsException
+     */
+    public function replaceIntoCoordinates(Button $button, int $row, int $column): self
+    {
+        if (array_key_exists($row, $this->data['rows']) && array_key_exists($column, $this->data['rows'][$row]['buttons'])) {
+            $this->data['rows'][$row]['buttons'][$column] = $button();
+            return $this;
+        }
+        throw new OutOfBoundsException("Please be sure that $row and $column exists in array keys!");
+    }
+
+    /**
+     * To remove button by it coordinates to fluent-keyboard (Note that coordinates start from 0 look like arrays indexes).
+     *
+     * @param int $row
+     * @param int $column
+     * @return KeyboardInline|KeyboardHide|KeyboardMarkup|KeyboardForceReply
+     * @throws OutOfBoundsException
+     */
+    public function removeFromCoordinates(int $row, int $column): self
+    {
+        if (array_key_exists($row, $this->data['rows']) && array_key_exists($column, $this->data['rows'][$row]['buttons'])) {
+            unset($this->data['rows'][$row]['buttons'][$column]);
+            return $this;
+        }
+        throw new OutOfBoundsException("Please be sure that $row and $column exists in array keys!");
+    }
+
+    /**
+     * Remove the last button from fluent-keyboard.
+     *
+     * @return KeyboardInline|KeyboardHide|KeyboardMarkup|KeyboardForceReply
+     * @throws RangeException
+     */
+    public function remove(): self
+    {
+        if(
+            !empty($rows = $this->data['rows']) &&
+            !empty($endButtons = end($rows)['buttons'])
+        ){
+            $endRow = array_keys($rows);
+            $endButton = array_keys($endButtons);
+            if(count($endButtons) == 1) unset($this->data['rows'][end($endRow)]);
+            unset($this->data['rows'][end($endRow)]['buttons'][end($endButton)]);
+            return $this;
+        }
+        throw new RangeException("Keyboard array is already empty!");
+    }
+
+    /**
+     * Add a new raw with specified button ( pass null to only add new row).
+     *
+     * @param KeyboardButton|InlineButton|null ...$button
+     * @return KeyboardInline|KeyboardHide|KeyboardMarkup|KeyboardForceReply
+     */
     public function row(?Button ...$button): self
     {
         $keyboard = &$this->data['rows'];
@@ -140,6 +246,12 @@ abstract class Keyboard
         return $this;
     }
 
+    /**
+     * Add specified buttons to fluent-keyboard (each button will add to new row).
+     *
+     * @param KeyboardButton|InlineButton|null ...$button
+     * @return KeyboardInline|KeyboardHide|KeyboardMarkup|KeyboardForceReply
+     */
     public function Stack(Button ...$button): self
     {
         array_map($this->row(...), $button);

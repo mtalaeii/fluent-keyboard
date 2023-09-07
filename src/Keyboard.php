@@ -151,14 +151,15 @@ abstract class Keyboard
     /**
      * To add a button by it coordinates to fluent-keyboard (Note that coordinates start from 0 look like arrays indexes).
      *
-     * @param KeyboardButton|InlineButton $button
      * @param int $row
      * @param int $column
+     * @param KeyboardButton|InlineButton ...$buttons
      * @return KeyboardInline|KeyboardHide|KeyboardMarkup|KeyboardForceReply
      */
-    public function addToCoordinates(Button $button, int $row, int $column): self
+    public function addToCoordinates(int $row, int $column,Button ...$buttons): self
     {
-        array_splice($this->data['rows'][$row]['buttons'], $column, 0, $button);
+        $buttons = array_map(fn(Button $button) => $button(),$buttons);
+        array_splice($this->data['rows'][$row]['buttons'], $column, 0, $buttons);
         return $this;
 
     }
@@ -166,16 +167,17 @@ abstract class Keyboard
     /**
      * To replace a button by it coordinates to fluent-keyboard (Note that coordinates start from 0 look like arrays indexes).
      *
-     * @param KeyboardButton|InlineButton $button
      * @param int $row
      * @param int $column
+     * @param KeyboardButton|InlineButton ...$button
      * @return KeyboardInline|KeyboardHide|KeyboardMarkup|KeyboardForceReply
      * @throws OutOfBoundsException
      */
-    public function replaceIntoCoordinates(Button $button, int $row, int $column): self
+    public function replaceIntoCoordinates(int $row, int $column,Button ...$buttons): self
     {
         if (array_key_exists($row, $this->data['rows']) && array_key_exists($column, $this->data['rows'][$row]['buttons'])) {
-            $this->data['rows'][$row]['buttons'][$column] = $button();
+            $buttons = array_map(fn(Button $button) => $button(),$buttons);
+            array_splice($this->data['rows'][$row]['buttons'], $column, count($buttons), $buttons);
             return $this;
         }
         throw new OutOfBoundsException("Please be sure that $row and $column exists in array keys!");

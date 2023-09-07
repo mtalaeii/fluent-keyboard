@@ -204,7 +204,7 @@ This picture show you the position of new button :
 
 ![Screenshot_20230907_212829](https://github.com/mtalaeii/fluent-keyboard/assets/73236713/89c0427e-c1c1-4fa2-8a2b-6d13ecf92286)
 ```php
-$keyboard->addToCoordinates(InlineButton::Callback('Middle','Middle'),0,1);
+$keyboard->addToCoordinates(0,1,InlineButton::Callback('Middle','Middle'));
 ```
 The results should like this image :
 
@@ -218,7 +218,7 @@ your new button into passed coordinate for example if we want to replace Add in 
 we should use this code :
 
 ```php
-$keyboard->replaceIntoCoordinates(InlineButton::Callback('Replaced Add','Add'),1,0);
+$keyboard->replaceIntoCoordinates(1,0,InlineButton::Callback('Replaced Add','Add'));
 ```
 The result should like this image :
 

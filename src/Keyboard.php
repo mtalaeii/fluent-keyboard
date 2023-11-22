@@ -18,6 +18,7 @@ use RangeException;
 abstract class Keyboard
 {
     protected int $currentRowIndex = 0;
+
     protected array $data = [
         'rows' => [
             ['_' => 'keyboardButtonRow', 'buttons' => []]
@@ -27,7 +28,7 @@ abstract class Keyboard
     /**
      * To cast fluent-keyboard to Telegram MTProto keyboard.
      *
-     * @return array array of Telegram MTProto Keyboard
+     * @return list<array> Telegram MTProto Keyboard
      */
     public function build(): array
     {
@@ -64,20 +65,38 @@ abstract class Keyboard
             foreach ($rows as $row) {
                 foreach ($row as $button) {
                     $keyboard->addButton(match ($button['_']) {
-                        'keyboardButtonSwitchInline' => InlineButton::SwitchInline($button['text'], $button['query'], $button['same_peer'] ?? false, $button['peer_types'] ?? []),
-                        'keyboardButtonWebView' => InlineButton::WebApp($button['text'], $button['url']),
-                        'keyboardButtonUrlAuth' => InlineButton::Login($button['text'], $button['url'], $button['button_id'] ?? 0, $button['fwd_text'] ?? ''),
-                        'keyboardButtonCallback' => InlineButton::CallBack($button['text'], $button['data'], $button['requires_password'] ?? false),
-                        'keyboardButtonUrl' => InlineButton::Url($button['text'], $button['url']),
-                        'keyboardButtonGame' => InlineButton::Game($button['text']),
-                        'keyboardButtonBuy' => InlineButton::Buy($button['text']),
-                        'keyboardButton' => KeyboardButton::Text($button['text']),
-                        'keyboardButtonUserProfile' => KeyboardButton::Profile($button['text'], $button['user_id']),
-                        'keyboardButtonRequestPoll' => KeyboardButton::Poll($button['text'], $button['quiz'] ?? false),
+                        'keyboardButton'                   => KeyboardButton::Text($button['text']),
+                        'keyboardButtonUserProfile'        => KeyboardButton::Profile($button['text'], $button['user_id']),
+                        'keyboardButtonRequestPoll'        => KeyboardButton::Poll($button['text'], $button['quiz'] ?? false),
                         'keyboardButtonRequestGeoLocation' => KeyboardButton::Location($button['text']),
-                        'keyboardButtonRequestPhone' => KeyboardButton::Phone($button['text']),
-                        'keyboardButtonSimpleWebView' => KeyboardButton::SimpleWebApp($button['text'], $button['url']),
-                        'keyboardButtonRequestPeer' => KeyboardButton::Peer($button['text'], $button['button_id'] ?? 0, RequestPeerType::fromRawPeerType($button['peer_type']))
+                        'keyboardButtonRequestPhone'       => KeyboardButton::Phone($button['text']),
+                        'keyboardButtonSimpleWebView'      => KeyboardButton::SimpleWebApp($button['text'], $button['url']),
+                        'keyboardButtonGame'               => InlineButton::Game($button['text']),
+                        'keyboardButtonBuy'                => InlineButton::Buy($button['text']),
+                        'keyboardButtonWebView'            => InlineButton::WebApp($button['text'], $button['url']),
+                        'keyboardButtonUrl'                => InlineButton::Url($button['text'], $button['url']),
+                        'keyboardButtonSwitchInline'       => InlineButton::SwitchInline(
+                            $button['text'],
+                            $button['query'],
+                            $button['same_peer'] ?? false,
+                            $button['peer_types'] ?? []
+                        ),
+                        'keyboardButtonUrlAuth' => InlineButton::Login(
+                            $button['text'],
+                            $button['url'],
+                            $button['button_id'] ?? 0,
+                            $button['fwd_text'] ?? ''
+                        ),
+                        'keyboardButtonCallback' => InlineButton::CallBack(
+                            $button['text'],
+                            $button['data'],
+                            $button['requires_password'] ?? false
+                        ),
+                        'keyboardButtonRequestPeer' => KeyboardButton::Peer(
+                            $button['text'],
+                            $button['button_id'] ?? 0,
+                            RequestPeerType::fromRawPeerType($button['peer_type'])
+                        )
                     });
                 }
                 $keyboard->row();
@@ -87,7 +106,7 @@ abstract class Keyboard
         }
 
         return match ($type) {
-            'replyKeyboardHide' => KeyboardHide::new(),
+            'replyKeyboardHide'       => KeyboardHide::new(),
             'replyKeyboardForceReply' => KeyboardForceReply::new(),
             default => null
         };

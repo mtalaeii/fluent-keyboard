@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace EasyKeyboard\FluentKeyboard\Tools\PeerTypes;
 
@@ -11,14 +11,13 @@ class RequestPeerTypeBroadcast extends RequestPeerType
         bool             $has_username      = false,
         ?ChatAdminRights $user_admin_rights = null,
         ?ChatAdminRights $bot_admin_rights  = null
-    ): self
-    {
+    ): self {
         $data = [
             '_' => 'requestPeerTypeBroadcast',
             'creator'      => $creator,
             'has_username' => $has_username,
-            'user_admin_rights' => is_callable($user_admin_rights) ?  $user_admin_rights(): ChatAdminRights::new()(),
-            'bot_admin_rights'  => is_callable($bot_admin_rights)  ?  $bot_admin_rights() : ChatAdminRights::new()()
+            'user_admin_rights' => \is_callable($user_admin_rights) ?  $user_admin_rights(): ChatAdminRights::new()(),
+            'bot_admin_rights'  => \is_callable($bot_admin_rights)  ?  $bot_admin_rights() : ChatAdminRights::new()()
         ];
         return new static($data);
     }

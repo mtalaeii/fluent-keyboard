@@ -1,6 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace EasyKeyboard\FluentKeyboard\Tools\PeerTypes;
+
 use EasyKeyboard\FluentKeyboard\ChatAdminRights;
 
 abstract class RequestPeerType
@@ -16,10 +17,10 @@ abstract class RequestPeerType
         $this->types = $data + $this->types;
     }
 
-    public static function fromRawPeerType(array $peerType) : self
+    public static function fromRawPeerType(array $peerType): self
     {
         unset($peerType['user_admin_rights']['_'],$peerType['bot_admin_rights']['_']);
-        return match ($peerType['_']){
+        return match ($peerType['_']) {
             'requestPeerTypeBroadcast' => RequestPeerTypeBroadcast::new(
                 $peerType['creator'] ?? false,
                 $peerType['has_username'] ?? false,
@@ -33,7 +34,7 @@ abstract class RequestPeerType
                 ChatAdminRights::new(...$peerType['user_admin_rights']),
                 ChatAdminRights::new(...$peerType['bot_admin_rights'])
             ),
-            'requestPeerTypeUser' => RequestPeerTypeUser::new($peerType['bot'] ?? false,$peerType['premium'] ?? false)
+            'requestPeerTypeUser' => RequestPeerTypeUser::new($peerType['bot'] ?? false, $peerType['premium'] ?? false)
         };
     }
 }

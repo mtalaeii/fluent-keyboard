@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace EasyKeyboard\FluentKeyboard\ButtonTypes;
 
@@ -7,13 +7,8 @@ use EasyKeyboard\FluentKeyboard\Button;
 final class InlineButton extends Button
 {
     /**
-     * Create Inline button with SwitchInline options
+     * Create Inline button with SwitchInline options.
      *
-     * @param string $text
-     * @param string $query
-     * @param bool $same_peer
-     * @param array $peer_types
-     * @return InlineButton
      */
     public static function SwitchInline(string $text, string $query, bool $same_peer = true, array $peer_types = []): InlineButton
     {
@@ -28,11 +23,8 @@ final class InlineButton extends Button
     }
 
     /**
-     * Create Inline webapp button
+     * Create Inline webapp button.
      *
-     * @param string $text
-     * @param string $url
-     * @return InlineButton
      */
     public static function WebApp(string $text, string $url): InlineButton
     {
@@ -45,13 +37,8 @@ final class InlineButton extends Button
     }
 
     /**
-     * Create inline button for login
+     * Create inline button for login.
      *
-     * @param string $text
-     * @param string $url
-     * @param int $button_id
-     * @param string|null $fwd_text
-     * @return InlineButton
      */
     public static function Login(string $text, string $url, int $button_id = 0, ?string $fwd_text = null): InlineButton
     {
@@ -66,12 +53,8 @@ final class InlineButton extends Button
     }
 
     /**
-     * Create inline button with callback data
+     * Create inline button with callback data.
      *
-     * @param string $text
-     * @param string $callback
-     * @param bool $requires_password
-     * @return InlineButton
      */
     public static function CallBack(string $text, string $callback, bool $requires_password = false): InlineButton
     {
@@ -85,11 +68,8 @@ final class InlineButton extends Button
     }
 
     /**
-     * Create Inline button with url
+     * Create Inline button with url.
      *
-     * @param string $text
-     * @param string $url
-     * @return InlineButton
      */
     public static function Url(string $text, string $url): InlineButton
     {
@@ -102,10 +82,8 @@ final class InlineButton extends Button
     }
 
     /**
-     * Create game button for your inline game
+     * Create game button for your inline game.
      *
-     * @param string $text
-     * @return InlineButton
      */
     public static function Game(string $text): InlineButton
     {
@@ -117,10 +95,8 @@ final class InlineButton extends Button
     }
 
     /**
-     * Create a buy button for your inline buy request(similar to webapps)
+     * Create a buy button for your inline buy request(similar to webapps).
      *
-     * @param string $text
-     * @return InlineButton
      */
     public static function Buy(string $text): InlineButton
     {

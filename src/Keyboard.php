@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace EasyKeyboard\FluentKeyboard;
 
@@ -33,8 +33,9 @@ abstract class Keyboard
     public function build(): array
     {
         $keyboard = &$this->data['rows'];
-        if (empty($keyboard[$this->currentRowIndex]['buttons']))
+        if (empty($keyboard[$this->currentRowIndex]['buttons'])) {
             unset($keyboard[$this->currentRowIndex]);
+        }
 
         return $this->data;
     }
@@ -49,9 +50,9 @@ abstract class Keyboard
     public static function fromRawReplyMarkup(array $rawReplyMarkup): ?self
     {
         $type = $rawReplyMarkup['_'];
-        $rows = array_column($rawReplyMarkup['rows'], 'buttons');
+        $rows = \array_column($rawReplyMarkup['rows'], 'buttons');
         if (!empty($rows)) {
-            $options = array_filter([
+            $options = \array_filter([
                 'selective' => $rawReplyMarkup['selective'] ?? null,
                 'resize' => $rawReplyMarkup['resize'] ?? null,
                 'placeholder' => $rawReplyMarkup['placeholder'] ?? null,
@@ -101,7 +102,7 @@ abstract class Keyboard
                 }
                 $keyboard->row();
             }
-            array_walk($options,fn(string|bool $value,string $key) => $keyboard->{$key}($value));
+            \array_walk($options, fn (string|bool $value, string $key) => $keyboard->{$key}($value));
             return $keyboard;
         }
 
@@ -130,10 +131,10 @@ abstract class Keyboard
         if ((!isset($arguments[0]) || $arguments[0])) {
             $fn = match ($name) {
                 'resize',
-                'selective' => fn(bool $option = true) => $this->data[$name] = $option,
-                'singleUse' => fn(bool $option = true) => $this->data['single_use'] = $option,
-                'placeholder' => function (string $placeholder = null) {
-                    $length = mb_strlen($placeholder);
+                'selective' => fn (bool $option = true) => $this->data[$name] = $option,
+                'singleUse' => fn (bool $option = true) => $this->data['single_use'] = $option,
+                'placeholder' => function (string $placeholder = null): void {
+                    $length = \mb_strlen($placeholder);
                     if (isset($placeholder) && $length >= 0 && $length <= 64) {
                         $this->data['placeholder'] = $placeholder;
                     } elseif ($placeholder != null) {
@@ -141,14 +142,14 @@ abstract class Keyboard
                     }
                 },
                 default => throw new Exception(
-                    sprintf('Call to undefined method %s::%s()', $this::class, $name)
+                    \sprintf('Call to undefined method %s::%s()', $this::class, $name)
                 )
             };
             isset($arguments[0]) ? $fn($arguments[0]) : $fn();
             return $this;
         }
         throw new Exception(
-            sprintf('Call to undefined method %s::%s()', $this::class, $name)
+            \sprintf('Call to undefined method %s::%s()', $this::class, $name)
         );
     }
 
@@ -162,41 +163,35 @@ abstract class Keyboard
     public function addButton(Button ...$buttons): self
     {
         $row = &$this->data['rows'][$this->currentRowIndex];
-        $buttons = array_map(fn($val) => $val(), $buttons);
-        $row['buttons'] = array_merge($row['buttons'] ?? [], $buttons);
+        $buttons = \array_map(fn ($val) => $val(), $buttons);
+        $row['buttons'] = \array_merge($row['buttons'] ?? [], $buttons);
         return $this;
     }
 
     /**
      * To add a button by it coordinates to fluent-keyboard (Note that coordinates start from 0 look like arrays indexes).
      *
-     * @param int $row
-     * @param int $column
      * @param KeyboardButton|InlineButton ...$buttons
      * @return KeyboardInline|KeyboardHide|KeyboardMarkup|KeyboardForceReply
      */
-    public function addToCoordinates(int $row, int $column,Button ...$buttons): self
+    public function addToCoordinates(int $row, int $column, Button ...$buttons): self
     {
-        $buttons = array_map(fn(Button $button) => $button(),$buttons);
-        array_splice($this->data['rows'][$row]['buttons'], $column, 0, $buttons);
+        $buttons = \array_map(fn (Button $button) => $button(), $buttons);
+        \array_splice($this->data['rows'][$row]['buttons'], $column, 0, $buttons);
         return $this;
-
     }
 
     /**
      * To replace a button by it coordinates to fluent-keyboard (Note that coordinates start from 0 look like arrays indexes).
      *
-     * @param int $row
-     * @param int $column
-     * @param KeyboardButton|InlineButton ...$button
      * @return KeyboardInline|KeyboardHide|KeyboardMarkup|KeyboardForceReply
      * @throws OutOfBoundsException
      */
-    public function replaceIntoCoordinates(int $row, int $column,Button ...$buttons): self
+    public function replaceIntoCoordinates(int $row, int $column, Button ...$buttons): self
     {
-        if (array_key_exists($row, $this->data['rows']) && array_key_exists($column, $this->data['rows'][$row]['buttons'])) {
-            $buttons = array_map(fn(Button $button) => $button(),$buttons);
-            array_splice($this->data['rows'][$row]['buttons'], $column, count($buttons), $buttons);
+        if (\array_key_exists($row, $this->data['rows']) && \array_key_exists($column, $this->data['rows'][$row]['buttons'])) {
+            $buttons = \array_map(fn (Button $button) => $button(), $buttons);
+            \array_splice($this->data['rows'][$row]['buttons'], $column, \count($buttons), $buttons);
             return $this;
         }
         throw new OutOfBoundsException("Please be sure that $row and $column exists in array keys!");
@@ -205,18 +200,17 @@ abstract class Keyboard
     /**
      * To remove button by it coordinates to fluent-keyboard (Note that coordinates start from 0 look like arrays indexes).
      *
-     * @param int $row
-     * @param int $column
-     * @param int $count
      * @return KeyboardInline|KeyboardHide|KeyboardMarkup|KeyboardForceReply
      * @throws OutOfBoundsException
      */
-    public function removeFromCoordinates(int $row, int $column,int $count = 1): self
+    public function removeFromCoordinates(int $row, int $column, int $count = 1): self
     {
-        if (array_key_exists($row, $this->data['rows']) && array_key_exists($column, $this->data['rows'][$row]['buttons'])) {
-            array_splice($this->data['rows'][$row]['buttons'], $column, $count);
+        if (\array_key_exists($row, $this->data['rows']) && \array_key_exists($column, $this->data['rows'][$row]['buttons'])) {
+            \array_splice($this->data['rows'][$row]['buttons'], $column, $count);
             $currentRow = $this->data['rows'][$row];
-            if(count($currentRow['buttons']) == 0) array_splice($this->data['rows'], $row, 1);
+            if (\count($currentRow['buttons']) == 0) {
+                \array_splice($this->data['rows'], $row, 1);
+            }
             return $this;
         }
         throw new OutOfBoundsException("Please be sure that $row and $column exists in array keys!");
@@ -230,14 +224,16 @@ abstract class Keyboard
      */
     public function remove(): self
     {
-        if(
+        if (
             !empty($rows = $this->data['rows']) &&
-            !empty($endButtons = end($rows)['buttons'])
-        ){
-            $endRow = array_keys($rows);
-            $endButton = array_keys($endButtons);
-            if(count($endButtons) == 1) unset($this->data['rows'][end($endRow)]);
-            unset($this->data['rows'][end($endRow)]['buttons'][end($endButton)]);
+            !empty($endButtons = \end($rows)['buttons'])
+        ) {
+            $endRow = \array_keys($rows);
+            $endButton = \array_keys($endButtons);
+            if (\count($endButtons) == 1) {
+                unset($this->data['rows'][\end($endRow)]);
+            }
+            unset($this->data['rows'][\end($endRow)]['buttons'][\end($endButton)]);
             return $this;
         }
         throw new RangeException("Keyboard array is already empty!");
@@ -278,7 +274,7 @@ abstract class Keyboard
      */
     public function Stack(Button ...$button): self
     {
-        array_map($this->row(...), $button);
+        \array_map($this->row(...), $button);
         return $this;
     }
 }

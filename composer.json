@@ -1,23 +1,49 @@
 {
-    "name": "easy-keyboard/fluent-keyboard",
-    "description": "A fluent keyboard created for MTProto syntax",
-    "keywords": ["telegram", "bot", "mtproto", "fluent", "keyboard", "builder","mt-proto","madelineproto"],
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-      {
-        "name": "Mahdi",
-        "email": "mahdi.talaee1379@gmail.com"
-      }
-    ],
-    "minimum-stability": "beta",
-    "autoload": {
-      "psr-4": {
-        "EasyKeyboard\\FluentKeyboard\\": "./src"
-      }
-    },
-    "require": {
-      "php-64bit": ">=8.1",
-      "ext-mbstring": "*"
+  "name": "easy-keyboard/fluent-keyboard",
+  "description": "A fluent keyboard created for MTProto syntax",
+  "keywords": [
+    "telegram",
+    "bot",
+    "mtproto",
+    "fluent",
+    "keyboard",
+    "builder",
+    "mt-proto",
+    "madelineproto"
+  ],
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Mahdi",
+      "email": "mahdi.talaee1379@gmail.com"
     }
-  }
+  ],
+  "autoload": {
+    "psr-4": {
+      "EasyKeyboard\\FluentKeyboard\\": "./src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "EasyKeyboard\\FluentKeyboard\\Test\\": "./tests"
+    }
+  },
+  "require": {
+    "php-64bit": ">=8.1",
+    "ext-mbstring": "*"
+  },
+  "require-dev": {
+    "amphp/php-cs-fixer-config": "^2.0",
+    "phpunit/phpunit": "^9"
+  },
+  "scripts": {
+    "build": [
+      "@cs-fix",
+      "@test"
+    ],
+    "cs-fix": "PHP_CS_FIXER_IGNORE_ENV=1 php -d pcre.jit=0 vendor/bin/php-cs-fixer fix -v",
+    "test": "php -dzend.assertions=1 -dassert.exception=1 ./vendor/bin/phpunit --coverage-text tests"
+  },
+  "minimum-stability": "beta"
+}

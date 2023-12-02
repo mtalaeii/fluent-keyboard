@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace EasyKeyboard\FluentKeyboard;
 
@@ -29,8 +29,7 @@ final class ChatAdminRights
         bool $manage_call     = false,
         bool $other           = false,
         bool $manage_topics   = false,
-    ): self
-    {
+    ): self {
         $adminRights = [
             '_'               => 'chatAdminRights',
             'change_info'     => $change_info,

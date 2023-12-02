@@ -64,14 +64,13 @@ docs/_build/
 # PyBuilder
 target/
 
-
+#cache stuff
 .env
 composer.lock
 .phpunit.result.cache
 .vscode/*
 .vscode
-
-
+.php_cs.cache
 .phpdoc_cache
 
 

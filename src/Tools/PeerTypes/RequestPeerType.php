@@ -22,19 +22,19 @@ abstract class RequestPeerType
         unset($peerType['user_admin_rights']['_'],$peerType['bot_admin_rights']['_']);
         return match ($peerType['_']) {
             'requestPeerTypeBroadcast' => RequestPeerTypeBroadcast::new(
-                $peerType['creator'] ?? false,
-                $peerType['has_username'] ?? false,
+                $peerType['creator'] ?? null,
+                $peerType['has_username'] ?? null,
                 ChatAdminRights::new(...$peerType['user_admin_rights']),
                 ChatAdminRights::new(...$peerType['bot_admin_rights'])
             ),
             'requestPeerTypeChat' => RequestPeerTypeChat::new(
-                $peerType['creator'] ?? false,
-                $peerType['has_username'] ?? false,
-                $peerType['forum'] ?? false,
+                $peerType['creator'] ?? null,
+                $peerType['has_username'] ?? null,
+                $peerType['forum'] ?? null,
                 ChatAdminRights::new(...$peerType['user_admin_rights']),
                 ChatAdminRights::new(...$peerType['bot_admin_rights'])
             ),
-            'requestPeerTypeUser' => RequestPeerTypeUser::new($peerType['bot'] ?? false, $peerType['premium'] ?? false)
+            'requestPeerTypeUser' => RequestPeerTypeUser::new($peerType['bot'] ?? null, $peerType['premium'] ?? null)
         };
     }
 }

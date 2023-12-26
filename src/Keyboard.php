@@ -2,15 +2,16 @@
 
 namespace EasyKeyboard\FluentKeyboard;
 
+use RangeException;
+use OutOfBoundsException;
+use Reymon\EasyKeyboard\Tools\InlineChoosePeer;
 use EasyKeyboard\FluentKeyboard\ButtonTypes\InlineButton;
 use EasyKeyboard\FluentKeyboard\ButtonTypes\KeyboardButton;
-use EasyKeyboard\FluentKeyboard\KeyboardTypes\KeyboardForceReply;
 use EasyKeyboard\FluentKeyboard\KeyboardTypes\KeyboardHide;
 use EasyKeyboard\FluentKeyboard\KeyboardTypes\KeyboardInline;
 use EasyKeyboard\FluentKeyboard\KeyboardTypes\KeyboardMarkup;
 use EasyKeyboard\FluentKeyboard\Tools\PeerTypes\RequestPeerType;
-use OutOfBoundsException;
-use RangeException;
+use EasyKeyboard\FluentKeyboard\KeyboardTypes\KeyboardForceReply;
 
 /**
  * Main class for Keyboard.
@@ -53,10 +54,10 @@ abstract class Keyboard
         $rows = \array_column($rawReplyMarkup['rows'], 'buttons');
         if (!empty($rows)) {
             $options = \array_filter([
-                'selective' => $rawReplyMarkup['selective'] ?? null,
-                'resize' => $rawReplyMarkup['resize'] ?? null,
+                'selective'   => $rawReplyMarkup['selective'] ?? null,
+                'resize'      => $rawReplyMarkup['resize'] ?? null,
                 'placeholder' => $rawReplyMarkup['placeholder'] ?? null,
-                'singleUse' => $rawReplyMarkup['single_use'] ?? null
+                'singleUse'   => $rawReplyMarkup['single_use'] ?? null
             ]);
             /** @var KeyboardMarkup|KeyboardInline $keyboard */
             $keyboard = match ($type) {
@@ -80,7 +81,7 @@ abstract class Keyboard
                             $button['text'],
                             $button['query'],
                             $button['same_peer'] ?? false,
-                            $button['peer_types'] ?? []
+                            isset($button['peer_types']) ? InlineChoosePeer::fromRawChoose($button['peer_types']) : null
                         ),
                         'keyboardButtonUrlAuth' => InlineButton::Login(
                             $button['text'],

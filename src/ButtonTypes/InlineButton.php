@@ -22,7 +22,7 @@ final class InlineButton extends Button
             'text' => $text,
             'query' => $query,
             'same_peer' => $same,
-            'peer_types' => $peerTypes()
+            'peer_types' => $peerTypes ? $peerTypes() : null
         ];
         return new static($data);
     }

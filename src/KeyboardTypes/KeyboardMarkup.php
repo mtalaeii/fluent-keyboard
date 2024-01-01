@@ -7,6 +7,8 @@ use EasyKeyboard\FluentKeyboard\Tools\EasyMarkup;
 use EasyKeyboard\FluentKeyboard\Tools\KeyboardDocs;
 
 /**
+ * Represents a custom keyboard with reply options
+ *
  * @mixin KeyboardDocs
  */
 final class KeyboardMarkup extends Keyboard

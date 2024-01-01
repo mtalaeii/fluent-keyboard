@@ -82,7 +82,7 @@ trait EasyInline
      * @param string $text Label text on the button
      * @param string $query Data to be sent in a [callback query](https://core.telegram.org/bots/api#callbackquery) to the bot when button is pressed, 1-64 bytes
      * @param bool $same Pressing the button will insert the bot's username and the specified inline query in the current chat's input field
-     * @param InlineChoosePeer $peerTypes Filter to use when selecting chats.
+     * @param InlineChoosePeer|null $peerTypes Filter to use when selecting chats.
      */
     public function addSwitchInline(string $text, string $query, bool $same_peer = true, ?InlineChoosePeer $peerTypes = null): KeyboardInline
     {

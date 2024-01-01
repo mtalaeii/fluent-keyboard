@@ -12,7 +12,7 @@ use EasyKeyboard\FluentKeyboard\Tools\PeerTypes\RequestPeerTypeUser;
 trait EasyMarkup
 {
     /**
-     * create simple text keyboard.
+     * Create simple text keyboard.
      *
      * @param string $text Label text on the button
      */
@@ -22,7 +22,7 @@ trait EasyMarkup
     }
 
     /**
-     * create simple texts keyboard.
+     * Create simple texts keyboard.
      *
      * @param array $keyboards
      */

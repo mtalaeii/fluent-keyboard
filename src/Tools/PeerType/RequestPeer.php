@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace EasyKeyboard\FluentKeyboard\Tools\PeerTypes;
+namespace EasyKeyboard\FluentKeyboard\Tools\PeerType;
 
 use EasyKeyboard\FluentKeyboard\ChatAdminRights;
 
-abstract class RequestPeerType
+abstract class RequestPeer
 {
     protected array $types = [];
     public function __invoke(): array
@@ -21,20 +21,20 @@ abstract class RequestPeerType
     {
         unset($peerType['user_admin_rights']['_'],$peerType['bot_admin_rights']['_']);
         return match ($peerType['_']) {
-            'requestPeerTypeBroadcast' => RequestPeerTypeBroadcast::new(
+            'requestPeerTypeBroadcast' => RequestChannel::new(
                 $peerType['creator'] ?? null,
                 $peerType['has_username'] ?? null,
                 ChatAdminRights::new(...$peerType['user_admin_rights']),
                 ChatAdminRights::new(...$peerType['bot_admin_rights'])
             ),
-            'requestPeerTypeChat' => RequestPeerTypeChat::new(
+            'requestPeerTypeChat' => RequestGroup::new(
                 $peerType['creator'] ?? null,
                 $peerType['has_username'] ?? null,
                 $peerType['forum'] ?? null,
                 ChatAdminRights::new(...$peerType['user_admin_rights']),
                 ChatAdminRights::new(...$peerType['bot_admin_rights'])
             ),
-            'requestPeerTypeUser' => RequestPeerTypeUser::new($peerType['bot'] ?? null, $peerType['premium'] ?? null)
+            'requestPeerTypeUser' => RequestUser::new($peerType['bot'] ?? null, $peerType['premium'] ?? null)
         };
     }
 }

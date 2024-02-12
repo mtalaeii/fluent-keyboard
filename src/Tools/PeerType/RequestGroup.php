@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace EasyKeyboard\FluentKeyboard\Tools\PeerTypes;
+namespace EasyKeyboard\FluentKeyboard\Tools\PeerType;
 
 use EasyKeyboard\FluentKeyboard\ChatAdminRights;
 
 /**
  * Pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot
  */
-class RequestPeerTypeChat extends RequestPeerType
+class RequestGroup extends RequestPeer
 {
     public static function new(
         ?bool $creator = null,
@@ -21,8 +21,8 @@ class RequestPeerTypeChat extends RequestPeerType
             'creator' => $creator,
             'forum'   => $forum,
             'has_username' => $hasUsername,
-            'user_admin_rights' => \is_callable($userAdminRights) ? $userAdminRights() : ChatAdminRights::new()(),
-            'bot_admin_rights'  => \is_callable($botAdminRights)  ? $botAdminRights()  : ChatAdminRights::new()()
+            'user_admin_rights' => $userAdminRights instanceof ChatAdminRights ? $userAdminRights() : null,
+            'bot_admin_rights'  => $botAdminRights  instanceof ChatAdminRights ? $botAdminRights() : null,
         ];
         return new static($data);
     }

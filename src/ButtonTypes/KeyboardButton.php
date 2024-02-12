@@ -3,7 +3,7 @@
 namespace EasyKeyboard\FluentKeyboard\ButtonTypes;
 
 use EasyKeyboard\FluentKeyboard\Button;
-use EasyKeyboard\FluentKeyboard\Tools\PeerTypes\RequestPeerType;
+use EasyKeyboard\FluentKeyboard\Tools\PeerType\RequestPeer;
 
 class KeyboardButton extends Button
 {
@@ -100,9 +100,9 @@ class KeyboardButton extends Button
      *
      * @param string $text Label text on the button
      * @param int $buttonId Signed 32-bit identifier of the request
-     * @param RequestPeerType $peerType Pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot
+     * @param RequestPeer $peerType Pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot
      */
-    public static function Peer(string $text, int $buttonId, RequestPeerType $peerType): KeyboardButton
+    public static function Peer(string $text, int $buttonId, RequestPeer $peerType): KeyboardButton
     {
         $data = [
             '_' => 'keyboardButtonRequestPeer',

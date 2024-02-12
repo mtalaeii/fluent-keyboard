@@ -5,9 +5,9 @@ namespace EasyKeyboard\FluentKeyboard\Tools;
 use EasyKeyboard\FluentKeyboard\ButtonTypes\KeyboardButton;
 use EasyKeyboard\FluentKeyboard\ChatAdminRights;
 use EasyKeyboard\FluentKeyboard\KeyboardTypes\KeyboardMarkup;
-use EasyKeyboard\FluentKeyboard\Tools\PeerTypes\RequestPeerTypeBroadcast;
-use EasyKeyboard\FluentKeyboard\Tools\PeerTypes\RequestPeerTypeChat;
-use EasyKeyboard\FluentKeyboard\Tools\PeerTypes\RequestPeerTypeUser;
+use EasyKeyboard\FluentKeyboard\Tools\PeerType\RequestUser;
+use EasyKeyboard\FluentKeyboard\Tools\PeerType\RequestGroup;
+use EasyKeyboard\FluentKeyboard\Tools\PeerType\RequestChannel;
 
 trait EasyMarkup
 {
@@ -93,7 +93,7 @@ trait EasyMarkup
      */
     public function requestUser(string $text, int $buttonId, ?bool $isBot = null, ?bool $isPremium = null): KeyboardMarkup
     {
-        $peerType = RequestPeerTypeUser::new($isBot, $isPremium);
+        $peerType = RequestUser::new($isBot, $isPremium);
         return $this->addButton(KeyboardButton::Peer($text, $buttonId, $peerType));
     }
 
@@ -108,7 +108,7 @@ trait EasyMarkup
      * @param ChatAdminRights|null $userAdminRights Required administrator rights of the user in the chat
      * @param ChatAdminRights|null $botAdminRights Required administrator rights of the bot in the chat
      */
-    public function requestChat(
+    public function requestGroup(
         string $text,
         int  $buttonId,
         ?bool $creator = null,
@@ -117,7 +117,7 @@ trait EasyMarkup
         ?ChatAdminRights $userAdminRights = null,
         ?ChatAdminRights $botAdminRights = null
     ): KeyboardMarkup {
-        $peerType = RequestPeerTypeChat::new(
+        $peerType = RequestGroup::new(
             $creator,
             $hasUsername,
             $forum,
@@ -145,7 +145,7 @@ trait EasyMarkup
         ?ChatAdminRights $userAdminRights = null,
         ?ChatAdminRights $botAdminRights = null
     ): KeyboardMarkup {
-        $peerType = RequestPeerTypeBroadcast::new($creator, $hasUsername, $botAdminRights, $userAdminRights);
+        $peerType = RequestChannel::new($creator, $hasUsername, $botAdminRights, $userAdminRights);
         return $this->addButton(KeyboardButton::Peer($text, $buttonId, $peerType));
     }
 }

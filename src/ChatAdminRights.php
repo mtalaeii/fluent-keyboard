@@ -6,14 +6,14 @@ final class ChatAdminRights
 {
     private array $adminRights = [];
 
+    private function __construct(array $data)
+    {
+        $this->adminRights +=  \array_filter($data, fn ($v) => !\is_null($v));
+    }
+
     public function __invoke(): array
     {
         return $this->adminRights;
-    }
-
-    public function __construct(array $data)
-    {
-        $this->adminRights += $data;
     }
 
     public static function new(

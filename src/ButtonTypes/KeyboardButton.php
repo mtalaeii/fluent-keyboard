@@ -5,26 +5,12 @@ namespace EasyKeyboard\FluentKeyboard\ButtonTypes;
 use EasyKeyboard\FluentKeyboard\Button;
 use EasyKeyboard\FluentKeyboard\Tools\PeerType\RequestPeer;
 
-class KeyboardButton extends Button
+final class KeyboardButton extends Button
 {
-    /**
-     * @param string $text Label text on the button
-     *
-     */
-    public static function Profile(string $text, int $userId): KeyboardButton
-    {
-        $data = [
-            '_' => 'keyboardButtonUserProfile',
-            'text' => $text,
-            'user_id' => $userId
-        ];
-        return new static($data);
-    }
-
     /**
      * Create text button that request poll from user.
      *
-     * @param string $text Label text on the button
+     * @param string    $text Label text on the button
      * @param bool|null $quiz Whether the user can create polls in the quiz mode
      */
     public static function Poll(string $text, ?bool $quiz = null): KeyboardButton
@@ -83,7 +69,7 @@ class KeyboardButton extends Button
      * Create text button that open web app without requiring user information.
      *
      * @param string $text Label text on the button
-     * @param string $url An HTTPS URL of a Web App to be opened with additional data as specified in [Initializing Web Apps](https://core.telegram.org/bots/webapps#initializing-mini-apps)
+     * @param string $url  An HTTPS URL of a Web App to be opened with additional data as specified in [Initializing Web Apps](https://core.telegram.org/bots/webapps#initializing-mini-apps)
      */
     public static function SimpleWebApp(string $text, string $url): KeyboardButton
     {
@@ -98,17 +84,17 @@ class KeyboardButton extends Button
     /**
      * Create a request peer button.
      *
-     * @param string $text Label text on the button
-     * @param int $buttonId Signed 32-bit identifier of the request
-     * @param RequestPeer $peerType Pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot
+     * @param string      $text     Label text on the button
+     * @param int         $buttonId Signed 32-bit identifier of the request
+     * @param RequestPeer $peer     Pressing the button will open a list of suitable chats. Tapping on a chat will send its identifier to the bot
      */
-    public static function Peer(string $text, int $buttonId, RequestPeer $peerType): KeyboardButton
+    public static function Peer(string $text, int $buttonId, RequestPeer $peer): KeyboardButton
     {
         $data = [
             '_' => 'keyboardButtonRequestPeer',
             'text' => $text,
             'button_id' => $buttonId,
-            'peer_type' => $peerType()
+            'peer_type' => $peer()
         ];
         return new static($data);
     }

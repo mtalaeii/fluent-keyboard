@@ -1,38 +1,36 @@
 <?php declare(strict_types=1);
 
+namespace EasyKeyboard\FluentKeyboard\Tools;
+
 /**
- * This file is part of Reymon.
- * Reymon is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
- * Reymon is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU General Public License for more details.
- * If not, see <http://www.gnu.org/licenses/>.
- *
- * @author    Mahdi <mahdi.talaee1379@gmail.com>
- * @author    AhJ <AmirHosseinJafari8228@gmail.com>
- * @copyright Copyright (c) 2023, ReymonTg
- * @license   https://choosealicense.com/licenses/gpl-3.0/ GPLv3
+ * Represents filter to use when selecting chats from switch inline.
  */
-
-namespace Reymon\EasyKeyboard\Tools;
-
 final class InlineChoosePeer
 {
     private array $data = [];
 
+    /**
+     * @param bool      $user       Private chat
+     * @param bool|null $bot        Private chat with a bot.
+     * @param bool|null $chat       [Chat](https://core.telegram.org/api/channel)
+     * @param bool|null $supergroup [Supergroup](https://core.telegram.org/api/channel)
+     * @param bool|null $channel    [Channel](https://core.telegram.org/api/channel)
+     * @param bool|null $same       Private chat with the bot itself
+     */
     public function __construct(
-        bool  $users = true,
-        ?bool $bots = null,
-        ?bool $chats = null,
-        ?bool $supergroups = null,
-        ?bool $channels = null,
+        bool  $user = true,
+        ?bool $bot = null,
+        ?bool $chat = null,
+        ?bool $supergroup = null,
+        ?bool $channel = null,
         ?bool $same = null,
     ) {
         $this->data = [
-            'inlineQueryPeerTypePM' => $users,
-            'inlineQueryPeerTypeBotPM' => $bots,
-            'inlineQueryPeerTypeChat' => $chats,
-            'inlineQueryPeerTypeMegagroup' => $supergroups,
-            'inlineQueryPeerTypeBroadcast' => $channels,
+            'inlineQueryPeerTypePM' => $user,
+            'inlineQueryPeerTypeBotPM' => $bot,
+            'inlineQueryPeerTypeChat' => $chat,
+            'inlineQueryPeerTypeMegagroup' => $supergroup,
+            'inlineQueryPeerTypeBroadcast' => $channel,
             'inlineQueryPeerTypeSameBotPM' => $same,
         ];
     }

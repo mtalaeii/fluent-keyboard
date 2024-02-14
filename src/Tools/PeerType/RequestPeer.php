@@ -7,14 +7,15 @@ use EasyKeyboard\FluentKeyboard\ChatAdminRights;
 abstract class RequestPeer
 {
     protected array $types = [];
+
+    protected function __construct(array $data)
+    {
+        $this->types = $data + $this->types;
+    }
+
     public function __invoke(): array
     {
         return $this->types;
-    }
-
-    public function __construct(array $data)
-    {
-        $this->types = $data + $this->types;
     }
 
     public static function fromRawPeerType(array $peerType): self

@@ -5,8 +5,12 @@ namespace EasyKeyboard\FluentKeyboard\Tools\PeerType;
 /**
  * Pressing the button will open a list of suitable users. Tapping on any user will send their identifier to the bot
  */
-class RequestUser extends RequestPeer
+final class RequestUser extends RequestPeer
 {
+    /**
+     * @param bool|null $bot     Whether request a bot
+     * @param bool|null $premium Whether request a premium user,
+     */
     public static function new(?bool $bot = null, ?bool $premium = null): self
     {
         $data = [

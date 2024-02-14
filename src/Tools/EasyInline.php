@@ -2,7 +2,7 @@
 
 namespace EasyKeyboard\FluentKeyboard\Tools;
 
-use Reymon\EasyKeyboard\Tools\InlineChoosePeer;
+use EasyKeyboard\FluentKeyboard\Tools\InlineChoosePeer;
 use EasyKeyboard\FluentKeyboard\ButtonTypes\InlineButton;
 use EasyKeyboard\FluentKeyboard\KeyboardTypes\KeyboardInline;
 
@@ -11,7 +11,7 @@ trait EasyInline
     /**
      * Create inline button with callback data.
      *
-     * @param string $text Label text on the button
+     * @param string $text     Label text on the button
      * @param string $callback Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
      */
     public function addCallback(string $text, string $callback): KeyboardInline
@@ -32,6 +32,16 @@ trait EasyInline
         };
         \array_map($callabe, $keyboards);
         return $this;
+    }
+
+    /**
+     * HTTP or tg:// URL to be opened when the button is pressed. Links tg://user?id=<user_id> can be used to mention a user by their identifier without using a username, if this is allowed by their privacy settings.
+     * @param string $text   Label text on the button
+     * @param int    $userId Unique identifier of the target user
+     */
+    public function addProfile(string $text, int $userId): KeyboardInline
+    {
+        return $this->addButton(InlineButton::Profile($text, $userId));
     }
 
     /**
@@ -79,13 +89,13 @@ trait EasyInline
     /**
      * Create Inline button with SwitchInline options.
      *
-     * @param string $text Label text on the button
-     * @param string $query Data to be sent in a [callback query](https://core.telegram.org/bots/api#callbackquery) to the bot when button is pressed, 1-64 bytes
-     * @param bool $same Pressing the button will insert the bot's username and the specified inline query in the current chat's input field
-     * @param InlineChoosePeer|null $peerTypes Filter to use when selecting chats.
+     * @param string                $text  Label text on the button
+     * @param string                $query Data to be sent in a [callback query](https://core.telegram.org/bots/api#callbackquery) to the bot when button is pressed, 1-64 bytes
+     * @param bool                  $same  Pressing the button will insert the bot's username and the specified inline query in the current chat's input field
+     * @param InlineChoosePeer|null $peer  Filter to use when selecting chats.
      */
-    public function addSwitchInline(string $text, string $query, bool $same_peer = true, ?InlineChoosePeer $peerTypes = null): KeyboardInline
+    public function addSwitchInline(string $text, string $query, bool $same = true, ?InlineChoosePeer $peer = null): KeyboardInline
     {
-        return $this->addButton(InlineButton::SwitchInline($text, $query, $same_peer, $peerTypes));
+        return $this->addButton(InlineButton::SwitchInline($text, $query, $same, $peer));
     }
 }

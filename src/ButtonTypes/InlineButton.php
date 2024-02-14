@@ -3,26 +3,41 @@
 namespace EasyKeyboard\FluentKeyboard\ButtonTypes;
 
 use EasyKeyboard\FluentKeyboard\Button;
-use Reymon\EasyKeyboard\Tools\InlineChoosePeer;
+use EasyKeyboard\FluentKeyboard\Tools\InlineChoosePeer;
 
 final class InlineButton extends Button
 {
     /**
      * Create Inline button with SwitchInline options.
      *
-     * @param string $text Label text on the button
-     * @param string $query Data to be sent in a [callback query](https://core.telegram.org/bots/api#callbackquery) to the bot when button is pressed, 1-64 bytes
-     * @param bool $same Pressing the button will insert the bot's username and the specified inline query in the current chat's input field
-     * @param InlineChoosePeer|null $peerTypes Filter to use when selecting chats.
+     * @param string                $text  Label text on the button
+     * @param string                $query Data to be sent in a [callback query](https://core.telegram.org/bots/api#callbackquery) to the bot when button is pressed, 1-64 bytes
+     * @param bool                  $same  Pressing the button will insert the bot's username and the specified inline query in the current chat's input field
+     * @param InlineChoosePeer|null $peer  Filter to use when selecting chats.
      */
-    public static function SwitchInline(string $text, string $query, bool $same = false, ?InlineChoosePeer $peerTypes = null): InlineButton
+    public static function SwitchInline(string $text, string $query, bool $same = false, ?InlineChoosePeer $peer = null): InlineButton
     {
         $data = [
             '_' => 'keyboardButtonSwitchInline',
             'text' => $text,
             'query' => $query,
             'same_peer' => $same,
-            'peer_types' => $peerTypes ? $peerTypes() : null
+            'peer_types' => $peer ? $peer() : null
+        ];
+        return new static($data);
+    }
+
+    /**
+     * HTTP or tg:// URL to be opened when the button is pressed. Links tg://user?id=<user_id> can be used to mention a user by their identifier without using a username, if this is allowed by their privacy settings.
+     * @param string $text   Label text on the button
+     * @param int    $userId Unique identifier of the target user
+     */
+    public static function Profile(string $text, int $userId): InlineButton
+    {
+        $data = [
+            '_' => 'keyboardButtonUserProfile',
+            'text' => $text,
+            'user_id' => $userId
         ];
         return new static($data);
     }
@@ -31,7 +46,7 @@ final class InlineButton extends Button
      * Create Inline webapp button.
      *
      * @param string $text Label text on the button
-     * @param string $url An HTTPS URL of a Web App to be opened with additional data as specified in [Initializing Web Apps](https://core.telegram.org/bots/webapps#initializing-mini-apps)
+     * @param string $url  An HTTPS URL of a Web App to be opened with additional data as specified in [Initializing Web Apps](https://core.telegram.org/bots/webapps#initializing-mini-apps)
      */
     public static function WebApp(string $text, string $url): InlineButton
     {
@@ -46,10 +61,10 @@ final class InlineButton extends Button
     /**
      * Create inline button for login.
      *
-     * @param string $text Label text on the button
-     * @param string $url An HTTPS URL used to automatically authorize the user
-     * @param int $buttonId Signed 32-bit identifier of the request
-     * @param string $fwdText New text of the button in forwarded messages
+     * @param string $text     Label text on the button
+     * @param string $url      An HTTPS URL used to automatically authorize the user
+     * @param int    $buttonId Signed 32-bit identifier of the request
+     * @param string $fwdText  New text of the button in forwarded messages
      */
     public static function Login(string $text, string $url, int $buttonId = 0, ?string $fwdText = null): InlineButton
     {
@@ -66,8 +81,8 @@ final class InlineButton extends Button
     /**
      * Create inline button with callback data.
      *
-     * @param string $text Label text on the button
-     * @param string $callback Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
+     * @param string    $text     Label text on the button
+     * @param string    $callback Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
      * @param bool|null $password
      */
     public static function CallBack(string $text, string $callback, ?bool $password = null): InlineButton

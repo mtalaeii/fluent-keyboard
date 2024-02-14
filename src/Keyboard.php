@@ -4,13 +4,13 @@ namespace EasyKeyboard\FluentKeyboard;
 
 use RangeException;
 use OutOfBoundsException;
-use Reymon\EasyKeyboard\Tools\InlineChoosePeer;
+use EasyKeyboard\FluentKeyboard\Tools\InlineChoosePeer;
+use EasyKeyboard\FluentKeyboard\Tools\PeerType\RequestPeer;
 use EasyKeyboard\FluentKeyboard\ButtonTypes\InlineButton;
 use EasyKeyboard\FluentKeyboard\ButtonTypes\KeyboardButton;
 use EasyKeyboard\FluentKeyboard\KeyboardTypes\KeyboardHide;
 use EasyKeyboard\FluentKeyboard\KeyboardTypes\KeyboardInline;
 use EasyKeyboard\FluentKeyboard\KeyboardTypes\KeyboardMarkup;
-use EasyKeyboard\FluentKeyboard\Tools\PeerTypes\RequestPeerType;
 use EasyKeyboard\FluentKeyboard\KeyboardTypes\KeyboardForceReply;
 
 /**
@@ -68,12 +68,12 @@ abstract class Keyboard
                 foreach ($row as $button) {
                     $keyboard->addButton(match ($button['_']) {
                         'keyboardButton'                   => KeyboardButton::Text($button['text']),
-                        'keyboardButtonUserProfile'        => KeyboardButton::Profile($button['text'], $button['user_id']),
                         'keyboardButtonRequestPoll'        => KeyboardButton::Poll($button['text'], $button['quiz'] ?? false),
                         'keyboardButtonRequestGeoLocation' => KeyboardButton::Location($button['text']),
                         'keyboardButtonRequestPhone'       => KeyboardButton::Phone($button['text']),
                         'keyboardButtonSimpleWebView'      => KeyboardButton::SimpleWebApp($button['text'], $button['url']),
                         'keyboardButtonGame'               => InlineButton::Game($button['text']),
+                        'keyboardButtonUserProfile'        => InlineButton::Profile($button['text'], $button['user_id']),
                         'keyboardButtonBuy'                => InlineButton::Buy($button['text']),
                         'keyboardButtonWebView'            => InlineButton::WebApp($button['text'], $button['url']),
                         'keyboardButtonUrl'                => InlineButton::Url($button['text'], $button['url']),
@@ -97,7 +97,7 @@ abstract class Keyboard
                         'keyboardButtonRequestPeer' => KeyboardButton::Peer(
                             $button['text'],
                             $button['button_id'] ?? 0,
-                            RequestPeerType::fromRawPeerType($button['peer_type'])
+                            RequestPeer::fromRawPeerType($button['peer_type'])
                         )
                     });
                 }

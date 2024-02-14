@@ -6,13 +6,13 @@ abstract class Button
 {
     private array $keyboard = [];
 
+    protected function __construct(array $data = [])
+    {
+        $this->keyboard += \array_filter($data, fn ($v) => !\is_null($v));
+    }
+
     public function __invoke()
     {
         return $this->keyboard;
-    }
-
-    public function __construct(array $data = [])
-    {
-        $this->keyboard = $data + $this->keyboard;
     }
 }

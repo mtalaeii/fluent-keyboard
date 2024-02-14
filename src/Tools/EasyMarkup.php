@@ -3,8 +3,8 @@
 namespace EasyKeyboard\FluentKeyboard\Tools;
 
 use EasyKeyboard\FluentKeyboard\ButtonTypes\KeyboardButton;
-use EasyKeyboard\FluentKeyboard\ChatAdminRights;
 use EasyKeyboard\FluentKeyboard\KeyboardTypes\KeyboardMarkup;
+use EasyKeyboard\FluentKeyboard\Tools\ChatRights;
 use EasyKeyboard\FluentKeyboard\Tools\PeerType\RequestUser;
 use EasyKeyboard\FluentKeyboard\Tools\PeerType\RequestGroup;
 use EasyKeyboard\FluentKeyboard\Tools\PeerType\RequestChannel;
@@ -95,15 +95,15 @@ trait EasyMarkup
     /**
      * Create a request peer chat button.
      *
-     * @param string               $text            Label text on the button
-     * @param int                  $buttonId        Signed 32-bit identifier of the request
-     * @param bool|null            $creator         Whether request a chat owned by the user
-     * @param bool|null            $hasUsername     Whether request a supergroup or a channel with a username
-     * @param bool|null            $forum           Whether request a forum supergroup
-     * @param ChatAdminRights|null $userAdminRights Required administrator rights of the user in the chat
-     * @param ChatAdminRights|null $botAdminRights  Required administrator rights of the bot in the chat
+     * @param string          $text            Label text on the button
+     * @param int             $buttonId        Signed 32-bit identifier of the request
+     * @param bool|null       $creator         Whether request a chat owned by the user
+     * @param bool|null       $hasUsername     Whether request a supergroup or a channel with a username
+     * @param bool|null       $forum           Whether request a forum supergroup
+     * @param ChatRights|null $userAdminRights Required administrator rights of the user in the chat
+     * @param ChatRights|null $botAdminRights  Required administrator rights of the bot in the chat
      */
-    public function requestGroup(string $text, int $buttonId, ?bool $creator = null, ?bool $hasUsername = null, ?bool $forum = null, ?ChatAdminRights $userAdminRights = null, ?ChatAdminRights $botAdminRights = null): KeyboardMarkup
+    public function requestGroup(string $text, int $buttonId, ?bool $creator = null, ?bool $hasUsername = null, ?bool $forum = null, ?ChatRights $userAdminRights = null, ?ChatRights $botAdminRights = null): KeyboardMarkup
     {
         $peer = RequestGroup::new($creator, $hasUsername, $forum, $userAdminRights, $botAdminRights);
         return $this->addButton(KeyboardButton::Peer($text, $buttonId, $peer));
@@ -112,14 +112,14 @@ trait EasyMarkup
     /**
      * Create a request peer broadcast button.
      *
-     * @param string               $text            Label text on the button
-     * @param int                  $buttonId        Signed 32-bit identifier of the request
-     * @param bool|null            $creator         Whether request a channel owned by the user
-     * @param bool|null            $hasUsername     Whether request a supergroup or a channel with a username
-     * @param ChatAdminRights|null $userAdminRights Required administrator rights of the user in the channel
-     * @param ChatAdminRights|null $botAdminRights  Required administrator rights of the bot in the channel
+     * @param string          $text            Label text on the button
+     * @param int             $buttonId        Signed 32-bit identifier of the request
+     * @param bool|null       $creator         Whether request a channel owned by the user
+     * @param bool|null       $hasUsername     Whether request a supergroup or a channel with a username
+     * @param ChatRights|null $userAdminRights Required administrator rights of the user in the channel
+     * @param ChatRights|null $botAdminRights  Required administrator rights of the bot in the channel
      */
-    public function requestChannel(string $text, int $buttonId, ?bool $creator = null, ?bool $hasUsername = null, ?ChatAdminRights $userAdminRights = null, ?ChatAdminRights $botAdminRights = null): KeyboardMarkup
+    public function requestChannel(string $text, int $buttonId, ?bool $creator = null, ?bool $hasUsername = null, ?ChatRights $userAdminRights = null, ?ChatRights $botAdminRights = null): KeyboardMarkup
     {
         $peer = RequestChannel::new($creator, $hasUsername, $botAdminRights, $userAdminRights);
         return $this->addButton(KeyboardButton::Peer($text, $buttonId, $peer));

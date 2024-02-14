@@ -2,7 +2,7 @@
 
 namespace EasyKeyboard\FluentKeyboard\Tools\PeerType;
 
-use EasyKeyboard\FluentKeyboard\ChatAdminRights;
+use EasyKeyboard\FluentKeyboard\Tools\ChatRights;
 
 abstract class RequestPeer
 {
@@ -25,15 +25,15 @@ abstract class RequestPeer
             'requestPeerTypeBroadcast' => RequestChannel::new(
                 $peerType['creator'] ?? null,
                 $peerType['has_username'] ?? null,
-                ChatAdminRights::new(...$peerType['user_admin_rights']),
-                ChatAdminRights::new(...$peerType['bot_admin_rights'])
+                ChatRights::new(...$peerType['user_admin_rights']),
+                ChatRights::new(...$peerType['bot_admin_rights'])
             ),
             'requestPeerTypeChat' => RequestGroup::new(
                 $peerType['creator'] ?? null,
                 $peerType['has_username'] ?? null,
                 $peerType['forum'] ?? null,
-                ChatAdminRights::new(...$peerType['user_admin_rights']),
-                ChatAdminRights::new(...$peerType['bot_admin_rights'])
+                ChatRights::new(...$peerType['user_admin_rights']),
+                ChatRights::new(...$peerType['bot_admin_rights'])
             ),
             'requestPeerTypeUser' => RequestUser::new($peerType['bot'] ?? null, $peerType['premium'] ?? null)
         };

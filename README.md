@@ -91,7 +91,7 @@ KeyboardButton::Phone('Send my Contact');
 This is done the same way for `InlineButton`:
 
 ```php
-InlineButton::Url('hello','https://example.com');
+InlineButton::Url('hello', 'https://example.com');
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -161,11 +161,11 @@ If you need more than one row, just call the row method without arguments, and c
 
 ```php
 KeyboardInline::new()
-    ->addButton(InlineButton::Callback('A','answer-a'))
-    ->addButton(InlineButton::Callback('B','answer-b'))
+    ->addButton(InlineButton::Callback('A', 'answer-a'))
+    ->addButton(InlineButton::Callback('B', 'answer-b'))
     ->row()
-    ->addButton(InlineButton::Callback('C','answer-c'))
-    ->addButton(InlineButton::Callback('D','answer-d'))
+    ->addButton(InlineButton::Callback('C', 'answer-c'))
+    ->addButton(InlineButton::Callback('D', 'answer-d'))
     ->build();
 ```
 
@@ -176,11 +176,11 @@ You can remove the last button by calling `remove` method here is an example :
 
 ```php
 KeyboardInline::new()
-    ->addButton(InlineButton::Callback('A','answer-a'))
-    ->addButton(InlineButton::Callback('B','answer-b'))
+    ->addButton(InlineButton::Callback('A', 'answer-a'))
+    ->addButton(InlineButton::Callback('B', 'answer-b'))
     ->row()
-    ->addButton(InlineButton::Callback('C','answer-c'))
-    ->addButton(InlineButton::Callback('D','answer-d'))
+    ->addButton(InlineButton::Callback('C', 'answer-c'))
+    ->addButton(InlineButton::Callback('D', 'answer-d'))
     ->remove()
     ->build();
 ```
@@ -192,11 +192,11 @@ You can add button to each coordinates you want! (Note that coordinates start fr
 for example imagine we have this keyboard :
 ```php
 $keyboard = KeyboardInline::new()
-    ->addButton(InlineButton::Callback('Numbers','Numbers'))
-    ->addButton(InlineButton::Callback('Status','Status'))
+    ->addButton(InlineButton::Callback('Numbers', 'Numbers'))
+    ->addButton(InlineButton::Callback('Status', 'Status'))
     ->row()
-    ->addButton(InlineButton::Callback('Add','Add'))
-    ->addButton(InlineButton::Callback('Remove','Remove'));
+    ->addButton(InlineButton::Callback('Add', 'Add'))
+    ->addButton(InlineButton::Callback('Remove', 'Remove'));
 ```
 we can add new button with it coordinates(raw and column) by calling `addToCoordinates` method.
 This methods will add new button in the coordinate that you passed and shift next buttons of the coordinates.
@@ -204,7 +204,7 @@ This picture show you the position of new button :
 
 ![Screenshot_20230907_212829](https://github.com/mtalaeii/fluent-keyboard/assets/73236713/89c0427e-c1c1-4fa2-8a2b-6d13ecf92286)
 ```php
-$keyboard->addToCoordinates(0,1,InlineButton::Callback('Middle','Middle'));
+$keyboard->addToCoordinates(0, 1, InlineButton::Callback('Middle','Middle'));
 ```
 The results should like this image :
 
@@ -218,7 +218,7 @@ your new button into passed coordinate for example if we want to replace Add in 
 we should use this code :
 
 ```php
-$keyboard->replaceIntoCoordinates(1,0,InlineButton::Callback('Replaced Add','Add'));
+$keyboard->replaceIntoCoordinates(1, 0, InlineButton::Callback('Replaced Add','Add'));
 ```
 The result should like this image :
 
@@ -228,7 +228,7 @@ You can also remove the button by it's coordinates for example if we want remove
 we should run this code:
 
 ```php
-$keyboard->removeFromCoordinates(1,0);
+$keyboard->removeFromCoordinates(1, 0);
 ```
 
 #### As Stack
@@ -238,8 +238,8 @@ If you want to add a bunch of buttons that have each a row for themselves you ca
 ```php
 KeyboardInline::new()
     ->Stack(
-        InlineButton::Login('Login','https://example.com/login'),
-        InlineButton::Url('Visit Homepage','https://example.com')
+        InlineButton::Login('Login', 'https://example.com/login'),
+        InlineButton::Url('Visit Homepage', 'https://example.com')
     )
     ->build();
 ```
@@ -274,33 +274,33 @@ $data['reply_markup'] = KeyboardForceReply::new()
 
 ### Keyboard Peer Type
 
-We have 3 types of peer type can be requested by bots RequestPeerTypeUser , RequestPeerTypeChat and RequestPeerTypeBroadcast
+We have 3 types of peer type can be requested by bots RequestUser , RequestGroup and RequestChannel
 
 ```php
 KeyboardMarkup::new()
-    ->addButton(KeyboardButton::Peer('Request for user',0,RequestPeerTypeUser::new()));
+    ->addButton(KeyboardButton::Peer('Request for user', 0, RequestUser::new()));
 ```
 ```php
 KeyboardMarkup::new()
-    ->addButton(KeyboardButton::Peer('Request for chat',1,RequestPeerTypeChat::new()));
+    ->addButton(KeyboardButton::Peer('Request for chat', 1, RequestGroup::new()));
 ```
 ```php
 KeyboardMarkup::new()
-    ->addButton(KeyboardButton::Peer('Request for broadcast',2,RequestPeerTypeBroadcast::new()));
+    ->addButton(KeyboardButton::Peer('Request for broadcast', 2, RequestChannel::new()));
 ```
 **You can also use easier syntax to create better one**
 
 ```php
 KeyboardMarkup::new()
-    ->requestUser('Request for user',0);
+    ->requestUser('Request for user', 0);
 ```
 ```php
 KeyboardMarkup::new()
-    ->requestChat('Request for chat',1);
+    ->requestGroup('Request for chat', 1);
 ```
 ```php
 KeyboardMarkup::new()
-    ->requestChannel('Request for broadcast',2);
+    ->requestChannel('Request for broadcast', 2);
 ```
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -316,7 +316,7 @@ As you know `$fluentKeyboard` is object here and you can modify and add more but
 here is an example if `$flunentKeyboard` instance of `KeyboardInline`
 
 ```php
-$fluentKeyboard->addButton(InlineButton::Callback('End','End'));
+$fluentKeyboard->addButton(InlineButton::Callback('End', 'End'));
 ```
 At the end you can call `build` method on that and pass to some telegram method here is an
 example for [MadelineProto](https://github.com/danog/MadelineProto) :

@@ -98,4 +98,15 @@ trait EasyInline
     {
         return $this->addButton(InlineButton::SwitchInline($text, $query, $same, $peer));
     }
+
+    /**
+     * Create keyboard for copying provided text to clipboard
+     *
+     * @param string $text     Label text on the button
+     * @param string $copyText the text for copying to clipboard
+     */
+    public function addCopyText(string $text, string $copyText): KeyboardInline
+    {
+        return $this->addButton(InlineButton::CopyText($text, $copyText));
+    }
 }

@@ -139,4 +139,20 @@ final class InlineButton extends Button
         ];
         return new static($data);
     }
+
+    /**
+     * Create keyboard for copying provided text to clipboard
+     *
+     * @param string $text     Label text on the button
+     * @param string $copyText the text for copying to clipboard
+     */
+    public static function CopyText(string $text,string $copyText): InlineButton
+    {
+        $data = [
+            '_' => 'keyboardButtonCopy',
+            'text' => $text,
+            'copy_text' => $copyText
+        ];
+        return new static($data);
+    }
 }

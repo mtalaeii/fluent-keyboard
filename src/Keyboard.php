@@ -134,7 +134,7 @@ abstract class Keyboard
                 'resize',
                 'selective' => fn (bool $option = true) => $this->data[$name] = $option,
                 'singleUse' => fn (bool $option = true) => $this->data['single_use'] = $option,
-                'placeholder' => function (string $placeholder = null): void {
+                'placeholder' => function (?string $placeholder = null): void {
                     $length = \mb_strlen($placeholder);
                     if (isset($placeholder) && $length >= 0 && $length <= 64) {
                         $this->data['placeholder'] = $placeholder;
